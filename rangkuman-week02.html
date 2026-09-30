@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rangkuman Week 2 — Application Layer | Data Communication and Computer Network Security</title>
+<style>
+  :root{
+    --bg:#0f1720;
+    --card:#ffffff;
+    --ink:#1a2330;
+    --sub:#5b6b7c;
+    --accent:#2563eb;
+    --accent-soft:#eaf1ff;
+    --accent2:#7c3aed;
+    --warn:#b45309;
+    --warn-soft:#fef3c7;
+    --green:#059669;
+    --green-soft:#d1fae5;
+    --red:#dc2626;
+    --red-soft:#fee2e2;
+    --border:#e4e8ee;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,#0f1720 0%, #17202b 340px, #f4f6f9 340px);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px 80px;}
+  header.hero{
+    padding:56px 24px 40px;
+    max-width:920px;
+    margin:0 auto;
+    color:#f5f7fa;
+  }
+  header.hero .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:.75rem;
+    color:#8fb2ff;
+    font-weight:600;
+  }
+  header.hero h1{font-size:1.9rem;margin:.4em 0 .3em;line-height:1.25;}
+  header.hero .meta{color:#aebac8;font-size:.92rem;}
+  .roadmap{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .roadmap span{
+    background:#1e293b;color:#e2e8f0;padding:6px 12px;border-radius:8px;
+    font-size:.82rem;border:1px solid #2c3b52;
+  }
+  section{
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
+    padding:28px 30px;margin-top:22px;box-shadow:0 1px 2px rgba(20,30,45,.04);
+  }
+  section h2{font-size:1.25rem;margin:0 0 6px;display:flex;align-items:center;gap:10px;}
+  section h2 .num{
+    display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;
+    border-radius:8px;background:var(--accent-soft);color:var(--accent);
+    font-size:.85rem;font-weight:700;flex-shrink:0;
+  }
+  section .lead{color:var(--sub);font-size:.95rem;margin-bottom:16px;}
+  h3{font-size:1.02rem;margin:22px 0 8px;color:var(--ink);}
+  ul,ol{padding-left:1.25em;margin:8px 0;}
+  li{margin-bottom:6px;}
+  code{
+    background:#f1f5f9;border:1px solid var(--border);border-radius:5px;
+    padding:1px 6px;font-size:.86em;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  }
+  pre{
+    background:#0f1720;color:#dbeafe;border-radius:10px;padding:16px 18px;overflow-x:auto;
+    font-size:.84rem;line-height:1.5;
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace;
+  }
+  pre .c{color:#64748b;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0;}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr;}}
+  .box{background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+  .box h4{margin:0 0 6px;font-size:.92rem;color:var(--accent);}
+  .box p,.box ul{margin:0;font-size:.91rem;color:#33404d;}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{
+    background:#f8fafc;font-weight:600;color:var(--sub);
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.03em;
+  }
+  .callout{
+    border-left:3px solid var(--accent);background:var(--accent-soft);
+    padding:12px 16px;border-radius:0 8px 8px 0;font-size:.92rem;margin:14px 0;
+  }
+  .callout.warn{border-color:var(--warn);background:var(--warn-soft);}
+  .callout.green{border-color:var(--green);background:var(--green-soft);}
+  .callout.red{border-color:var(--red);background:var(--red-soft);}
+  .analogi{
+    border:1px dashed #c7d2fe;background:#eef2ff;border-radius:10px;
+    padding:14px 18px;margin:14px 0;font-size:.92rem;
+  }
+  .analogi strong.title{color:var(--accent2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;font-size:.72rem;}
+  .fig{border:1px solid var(--border);border-radius:12px;padding:18px;margin:16px 0;background:#fbfcfe;}
+  .fig .cap{font-size:.82rem;color:var(--sub);text-align:center;margin-top:10px;}
+  .fig svg{display:block;margin:0 auto;max-width:100%;height:auto;}
+  .kv{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .kv span{
+    background:#eef2f7;color:#425163;font-size:.78rem;padding:4px 10px;
+    border-radius:999px;font-weight:500;
+  }
+  .q{
+    background:#fff;border:1px solid var(--border);border-left:3px solid var(--accent);
+    border-radius:10px;padding:16px 18px;margin:14px 0;font-size:.94rem;
+  }
+  .q .qn{color:var(--accent);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;}
+  .q .opts{margin-top:8px;color:#33404d;}
+  .q .opts div{padding:2px 0;}
+  .q .ans{margin-top:10px;color:var(--green);font-weight:600;font-size:.9rem;}
+  .q .expl{color:var(--sub);font-size:.88rem;margin-top:6px;}
+  footer{text-align:center;color:#9aa6b2;font-size:.8rem;margin-top:36px;}
+  @media print{
+    body{background:#fff;}
+    .wrap{max-width:none;padding:0;}
+    header.hero{color:#0f1720;padding:30px 0 20px;}
+    header.hero .meta,header.hero .eyebrow{color:#425163;}
+    .roadmap span{background:#eef2f7;color:#425163;border:none;}
+    section{break-inside:avoid;box-shadow:none;}
+    .q{break-inside:avoid;}
+    .fig{break-inside:avoid;}
+    pre{break-inside:avoid;background:#f1f5f9;color:#0f1720;}
+    .fig svg{max-width:100%;}
+    .pagebreak{break-before:page;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Rangkuman Materi Kuliah</div>
+  <h1>Data Communication and Computer Network Security</h1>
+  <div class="meta">Week 2 — Application Layer · Diadaptasi dari <em>Computer Networking: A Top-Down Approach</em> (Kurose &amp; Ross, 9th ed., Pearson 2025)</div>
+  <div class="roadmap">
+    <span>Prinsip aplikasi jaringan</span>
+    <span>Web &amp; HTTP</span>
+    <span>E-mail: SMTP, IMAP</span>
+    <span>DNS</span>
+    <span>Video streaming &amp; CDN</span>
+    <span>Socket programming</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ SECTION 1 ============ -->
+  <section>
+    <h2><span class="num">1</span> Prinsip Aplikasi Jaringan</h2>
+    <p class="lead">Aplikasi jaringan hidup di <em>end system</em> (ujung jaringan) — bukan di dalam jaringan inti. Di sinilah letak "kecerdasan" jaringan diletakkan.</p>
+
+    <p>Berbagai aplikasi jaringan yang kita pakai sehari-hari: media sosial, Web, pesan teks, e-mail, game multiplayer, streaming video (YouTube, Netflix), P2P file sharing, voice-over-IP (VoIP), video conference (Zoom), mesin pencari, remote login, dan lainnya.</p>
+    <div class="callout">Kunci utama: aplikasi jaringan ditulis sebagai <strong>program yang berjalan di end system</strong> (PC, ponsel, server web). Kita <strong>tidak perlu menulis perangkat lunak untuk perangkat network core</strong> (router, switch) — perangkat itu hanya meneruskan data. Inilah yang membuat pengembangan aplikasi jaringan cepat: cukup buat program di kedua ujung.</div>
+
+    <h3>Dua arsitektur aplikasi</h3>
+    <div class="grid2">
+      <div class="box"><h4>Client–Server</h4>
+        <ul>
+          <li>Server: host yang <strong>selalu menyala</strong> (always-on), alamat <strong>IP permanen</strong>, sering berada di <strong>datacenter</strong> agar mudah ditingkatkan skalanya.</li>
+          <li>Client: menghubungi server, boleh terhubung <strong>tidak terus-menerus</strong> (intermittent), bisa punya <strong>IP dinamis</strong>, dan <strong>tidak berkomunikasi langsung</strong> dengan client lain.</li>
+          <li>Contoh: HTTP, IMAP, FTP.</li>
+        </ul>
+      </div>
+      <div class="box"><h4>Peer-to-Peer (P2P)</h4>
+        <ul>
+          <li><strong>Tidak ada server always-on</strong>; host arbitrari saling berkomunikasi langsung.</li>
+          <li>Setiap peer meminta layanan sekaligus <strong>menyediakan layanan</strong> kepada peer lain.</li>
+          <li><strong>Self-scalability</strong>: peer baru membawa kapasitas layanan sekaligus permintaan baru.</li>
+          <li>Peer terhubung secara <strong>intermittent</strong> dan berganti IP → manajemen rumit.</li>
+          <li>Contoh: P2P file sharing (BitTorrent).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <!-- Client-Server -->
+        <text x="30" y="20" font-weight="bold" fill="#2563eb">CLIENT–SERVER</text>
+        <rect x="290" y="50" width="120" height="44" rx="8" fill="#2563eb"/>
+        <text x="350" y="77" text-anchor="middle" fill="#fff" font-weight="bold">Server</text>
+        <g fill="#eaf1ff" stroke="#93b4f8">
+          <rect x="40" y="40" width="86" height="34" rx="6"/>
+          <rect x="160" y="40" width="86" height="34" rx="6"/>
+          <rect x="40" y="120" width="86" height="34" rx="6"/>
+          <rect x="160" y="120" width="86" height="34" rx="6"/>
+          <rect x="420" y="160" width="86" height="34" rx="6"/>
+        </g>
+        <g fill="#425163">
+          <text x="83" y="61" text-anchor="middle">Client</text>
+          <text x="203" y="61" text-anchor="middle">Client</text>
+          <text x="83" y="141" text-anchor="middle">Client</text>
+          <text x="203" y="141" text-anchor="middle">Client</text>
+          <text x="463" y="181" text-anchor="middle">Client</text>
+        </g>
+        <g stroke="#93b4f8" stroke-width="1.5" fill="none">
+          <line x1="126" y1="57" x2="290" y2="68"/><line x1="246" y1="57" x2="290" y2="68"/>
+          <line x1="126" y1="137" x2="290" y2="84"/><line x1="246" y1="137" x2="290" y2="84"/>
+          <line x1="420" y1="162" x2="350" y2="96"/>
+        </g>
+        <text x="90" y="190" fill="#5b6b7c">Semua client → server saja;</text>
+        <text x="90" y="205" fill="#5b6b7c">client tidak saling bicara.</text>
+
+        <!-- P2P -->
+        <text x="410" y="20" font-weight="bold" fill="#7c3aed">PEER-TO-PEER</text>
+        <g fill="#eef2ff" stroke="#c4b5fd">
+          <ellipse cx="430" cy="70" rx="52" ry="24"/>
+          <ellipse cx="590" cy="90" rx="52" ry="24"/>
+          <ellipse cx="430" cy="180" rx="52" ry="24"/>
+          <ellipse cx="590" cy="175" rx="52" ry="24"/>
+          <ellipse cx="510" cy="128" rx="52" ry="24"/>
+        </g>
+        <g fill="#425163" text-anchor="middle">
+          <text x="430" y="75">peer</text><text x="590" y="95">peer</text>
+          <text x="430" y="185">peer</text><text x="590" y="180">peer</text>
+          <text x="510" y="133">peer</text>
+        </g>
+        <g stroke="#c4b5fd" stroke-width="1.5">
+          <line x1="482" y1="70" x2="538" y2="86"/><line x1="478" y1="172" x2="538" y2="92"/>
+          <line x1="430" y1="156" x2="430" y2="94"/><line x1="590" y1="114" x2="590" y2="66"/>
+          <line x1="482" y1="88" x2="538" y2="166"/>
+        </g>
+        <text x="420" y="225" fill="#5b6b7c">Semua peer saling terhubung, tanpa server sentral.</text>
+      </svg>
+      <div class="cap">Gambar 1 — Arsitektur client–server vs peer-to-peer.</div>
+    </div>
+
+    <div class="analogi">
+      <strong class="title">Analogi: Restoran vs Dapur bersama</strong>
+      <strong>Client–server</strong> seperti <strong>restoran</strong>: satu dapur (server) melayani banyak pelanggan (client). Pelanggan tak berhubungan satu sama lain, semuanya "berbicara" ke dapur. Kekurangannya: kalau dapur libur, semua hampa. <strong>P2P</strong> seperti <strong>dapur bersama (potluck)</strong>: setiap orang membawa makanan sekaligus makan dari yang dibawa orang lain — makin banyak orang datang, makin banyak juga makanan yang tersedia (self-scaling), tapi tidak teratur dan tidak bisa diandalkan.
+    </div>
+
+    <h3>Proses yang berkomunikasi</h3>
+    <p><strong>Proses</strong> = program yang sedang berjalan di dalam sebuah host. Dalam satu host, dua proses berkomunikasi lewat <strong>inter-process communication</strong> (diatur sistem operasi). Dua proses di host berbeda berkomunikasi dengan bertukar <strong>message</strong> lewat jaringan. Dalam arsitektur P2P pun tetap ada peran: <strong>client process = yang memulai komunikasi</strong>, <strong>server process = yang menunggu dihubungi</strong>.</p>
+
+    <h3>Soket (Socket): "pintu" antara aplikasi dan transport</h3>
+    <p>Proses mengirim/menerima pesan melalui <strong>soket</strong>. Soket itu seperti <strong>pintu</strong>: proses yang mengirim "mendorong" pesan keluar pintu, lalu infrastruktur transport di sisi lain pintu yang mengantarnya sampai ke soket proses penerima. Ada dua soket — satu di tiap sisi. Perhatikan pembagian kendali: aplikasi (pembuat aplikasi) mengendalikan yang di dalam pintu; sistem operasi mengendalikan yang di luar pintu (transport ke bawah).</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="20" y="20" width="140" height="40" rx="6" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="90" y="45" text-anchor="middle" fill="#1a2330">Proses aplikasi</text>
+        <rect x="20" y="65" width="140" height="30" rx="4" fill="#dbeafe" stroke="#93b4f8" stroke-dasharray="4 3"/>
+        <text x="90" y="85" text-anchor="middle" fill="#2563eb">SOKET (pintu)</text>
+        <rect x="20" y="100" width="140" height="40" rx="6" fill="#eef2f7" stroke="#cbd5e1"/>
+        <text x="90" y="124" text-anchor="middle" fill="#5b6b7c">Transport: TCP/UDP</text>
+        <rect x="20" y="145" width="140" height="30" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+        <text x="90" y="164" text-anchor="middle" fill="#94a3b8">Network, link, physical</text>
+
+        <rect x="560" y="20" width="140" height="40" rx="6" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="630" y="45" text-anchor="middle" fill="#1a2330">Proses aplikasi</text>
+        <rect x="560" y="65" width="140" height="30" rx="4" fill="#dbeafe" stroke="#93b4f8" stroke-dasharray="4 3"/>
+        <text x="630" y="85" text-anchor="middle" fill="#2563eb">SOKET (pintu)</text>
+        <rect x="560" y="100" width="140" height="40" rx="6" fill="#eef2f7" stroke="#cbd5e1"/>
+        <text x="630" y="124" text-anchor="middle" fill="#5b6b7c">Transport: TCP/UDP</text>
+        <rect x="560" y="145" width="140" height="30" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+        <text x="630" y="164" text-anchor="middle" fill="#94a3b8">Network, link, physical</text>
+
+        <g stroke="#7c3aed" stroke-width="2.5" fill="none">
+          <line x1="160" y1="80" x2="560" y2="80"/>
+          <path d="M 280 80 h 40 m -6 -8 l 8 8 l -8 8" fill="#7c3aed" stroke="none"/>
+          <path d="M 440 80 h -40 m 6 -8 l -8 8 l 8 8" fill="#7c3aed" stroke="none"/>
+        </g>
+        <text x="360" y="70" text-anchor="middle" fill="#7c3aed" font-weight="bold">pesan (message) lewat Internet</text>
+        <text x="360" y="100" text-anchor="middle" fill="#5b6b7c">Sisi aplikasi dikendalikan developer; sisi transport dikendalikan OS.</text>
+      </svg>
+      <div class="cap">Gambar 2 — Soket adalah pintu antara aplikasi dan protokol transport.</div>
+    </div>
+
+    <h3>Menunjuk proses: IP + port</h3>
+    <p>Untuk menerima pesan, sebuah proses butuh <strong>identitas</strong>. Host punya alamat IP 32-bit yang unik. Tapi IP saja tidak cukup: <em>pertanyaan di slide — "apakah IP host cukup untuk mengidentifikasi proses?"</em> <strong>Jawabannya tidak</strong>, karena banyak proses bisa berjalan di host yang sama. Maka identitas proses = <strong>alamat IP + nomor port</strong>.</p>
+    <ul>
+      <li>HTTP server → port <code>80</code></li>
+      <li>Mail server → port <code>25</code></li>
+      <li>Contoh: kirim pesan HTTP ke <code>gaia.cs.umass.edu</code> → IP <code>128.119.245.12</code>, port <code>80</code></li>
+    </ul>
+
+    <h3>Yang didefinisikan protokol application layer</h3>
+    <ul>
+      <li><strong>Jenis message</strong> yang dipertukarkan: request, response</li>
+      <li><strong>Sintaks:</strong> field apa saja dalam pesan dan bagaimana field dipisahkan</li>
+      <li><strong>Semantik:</strong> arti informasi dalam tiap field</li>
+      <li><strong>Aturan:</strong> kapan dan bagaimana proses mengirim &amp; merespons pesan</li>
+    </ul>
+    <div class="grid2">
+      <div class="box"><h4>Protokol terbuka</h4><p>Didefinisikan di RFC, semua orang bisa mengaksesnya → interoperable. Contoh: HTTP, SMTP.</p></div>
+      <div class="box"><h4>Protokol proprietary</h4><p>Milik satu pihak, tertutup. Contoh: protokol Zoom.</p></div>
+    </div>
+
+    <h3>Kebutuhan layanan transport</h3>
+    <table>
+      <tr><th>Kebutuhan</th><th>Arti</th></tr>
+      <tr><td><strong>Data integrity (keutuhan data)</strong></td><td>File transfer, transaksi web butuh 100% andal; audio dapat toleran kehilangan sebagian.</td></tr>
+      <tr><td><strong>Timing (ketepatan waktu)</strong></td><td>Telepon internet &amp; game interaktif butuh delay rendah — "berpuluh-puluh msec".</td></tr>
+      <tr><td><strong>Throughput (bandwidth)</strong></td><td>Multimedia butuh throughput minimum; "elastic apps" memakai berapa pun yang tersedia.</td></tr>
+      <tr><td><strong>Security</strong></td><td>Enkripsi, integritas data, otentikasi.</td></tr>
+    </table>
+
+    <table>
+      <tr><th>Aplikasi</th><th>Kehilangan data</th><th>Throughput</th><th>Sensitif waktu?</th></tr>
+      <tr><td>File transfer / download</td><td>tanpa loss</td><td>elastic</td><td>tidak</td></tr>
+      <tr><td>E-mail</td><td>tanpa loss</td><td>elastic</td><td>tidak</td></tr>
+      <tr><td>Web documents</td><td>tanpa loss</td><td>elastic</td><td>tidak</td></tr>
+      <tr><td>Real-time audio/video</td><td>toleran loss</td><td>audio 5 Kbps–1 Mbps; video 10 Kbps–5 Mbps</td><td>ya, 10-an msec</td></tr>
+      <tr><td>Streaming audio/video</td><td>toleran loss</td><td>seperti di atas</td><td>ya, beberapa detik</td></tr>
+      <tr><td>Interactive games</td><td>toleran loss</td><td>Kbps+</td><td>ya, 10-an msec</td></tr>
+      <tr><td>Text messaging</td><td>tanpa loss</td><td>elastic</td><td>ya dan tidak</td></tr>
+    </table>
+
+    <div class="grid2">
+      <div class="box"><h4>Layanan TCP</h4>
+        <ul>
+          <li>Transfer <strong>reliabel</strong> antar dua proses.</li>
+          <li><strong>Flow control</strong>: sender tidak membanjiri receiver.</li>
+          <li><strong>Congestion control</strong>: menahan sender saat jaringan padat.</li>
+          <li><strong>Connection-oriented</strong>: ada setup sebelum kirim data.</li>
+          <li><em>Tidak menyediakan:</em> timing, jaminan throughput minimum, security.</li>
+        </ul>
+      </div>
+      <div class="box"><h4>Layanan UDP</h4>
+        <ul>
+          <li>Transfer <strong>tidak reliabel</strong> antar dua proses (datagram).</li>
+          <li><em>Tidak menyediakan:</em> reliability, flow control, congestion control, timing, jaminan throughput, security, <strong>ataupun connection setup</strong>.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout warn"><strong>Mengapa UDP ada?</strong> Karena tidak semua aplikasi butuh yang TCP berikan. Aplikasi yang toleran loss dan peka delay (game, VoIP, DNS) lebih suka UDP: komunikasi langsung tanpa handshake = lebih cepat, tanpa retransmisi = delay rendah, dan aplikasi mengendalikan sendiri "fitur" yang dibutuhkannya (mis. QUIC melapisi TCP-like di atas UDP).</div>
+
+    <table>
+      <tr><th>Aplikasi</th><th>Protokol lapisan aplikasi</th><th>Protokol transport</th></tr>
+      <tr><td>File transfer / download</td><td>FTP [RFC 959]</td><td>TCP</td></tr>
+      <tr><td>E-mail</td><td>SMTP [RFC 5321]</td><td>TCP</td></tr>
+      <tr><td>Web documents</td><td>HTTP [RFC 7230, 9110]</td><td>TCP</td></tr>
+      <tr><td>Internet telephony</td><td>SIP [RFC 3261], RTP [RFC 3550], atau proprietary</td><td>TCP atau UDP</td></tr>
+      <tr><td>Streaming audio/video</td><td>HTTP, DASH</td><td>TCP</td></tr>
+      <tr><td>Interactive games</td><td>WOW, FPS (proprietary)</td><td>UDP atau TCP</td></tr>
+    </table>
+
+    <h3>Mengamankan TCP: TLS</h3>
+    <p>Soket TCP/UDP "mentah" (vanilla) <strong>tanpa enkripsi</strong> — password yang diketik akan melintasi internet dalam teks terang (cleartext!). Solusinya <strong>TLS (Transport Layer Security)</strong>:</p>
+    <ul>
+      <li>Menyediakan koneksi TCP <strong>terenkripsi</strong>.</li>
+      <li>Integritas data + <strong>end-point authentication</strong>.</li>
+      <li>TLS diimplementasikan di <strong>application layer</strong> (aplikasi memakai library TLS yang memakai TCP di bawahnya).</li>
+      <li>Dengan TLS, cleartext yang masuk ke "soket" menjadi <strong>terenkripsi</strong> saat melintasi internet. (Detail lanjutan: Chapter 8.)</li>
+    </ul>
+    <div class="analogi">
+      <strong class="title">Analogi: Pintu, alamat, dan amplop</strong>
+      <strong>Soket</strong> = pintu rumah yang anda dorong suratnya keluar; anda tidak peduli jalan apa yang dilewati tukang pos. <strong>IP + port</strong> = nomor rumah plus nama penerima di dalam rumah (alamat kota tanpa nama orang tidak cukup). <strong>TCP vs UDP</strong> = kurir yang menelpon dulu, mencatat resi, dan mengulang kalau rusak (TCP) vs melempar pos udara begitu saja tanpa konfirmasi (UDP). <strong>TLS</strong> = surat dalam <strong>amplop tersegel</strong> yang tak bisa dibaca siapa pun di tengah jalan.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2 ============ -->
+  <section>
+    <h2><span class="num">2</span> Web dan HTTP</h2>
+    <p class="lead">HTTP (HyperText Transfer Protocol) adalah protokol application layer Web: client (browser) meminta objek, server Web mengirimnya.</p>
+
+    <h3>Konsep dasar Web</h3>
+    <ul>
+      <li>Sebuah <strong>web page</strong> terdiri dari <strong>objek</strong>; tiap objek bisa disimpan di server yang berbeda.</li>
+      <li>Objek bisa berupa file HTML, gambar JPEG, Java applet, file audio, dsb.</li>
+      <li>Halaman = file HTML <strong>dasar</strong> yang merujuk sejumlah objek, masing-masing dialamati <strong>URL</strong>, contoh <code>www.someschool.edu/someDept/pic.gif</code> → bagian <strong>host name</strong> dan <strong>path name</strong>.</li>
+    </ul>
+
+    <h3>Model HTTP</h3>
+    <ul>
+      <li>Client (browser seperti Safari/Firefox) meminta &amp; menampilkan objek; server (mis. Apache) mengirim objek sebagai respons.</li>
+      <li>HTTP memakai <strong>TCP</strong>: client membuka koneksi TCP (soket) ke server port <code>80</code>; server menerima; keduanya bertukar pesan HTTP; koneksi ditutup.</li>
+      <li>HTTP bersifat <strong>stateless</strong>: server <strong>tidak menyimpan informasi</strong> tentang permintaan client sebelumnya. Mengapa dirancang begitu? Protokol yang menjaga "state" itu rumit: state harus dipelihara, dan jika client/server crash maka pandangan keduanya tentang state bisa tak konsisten dan harus didamaikan.</li>
+    </ul>
+
+    <h3>Dua jenis koneksi HTTP</h3>
+    <div class="grid2">
+      <div class="box"><h4>Non-persistent HTTP</h4><ul><li>Satu koneksi TCP dibuka, <strong>paling banyak satu objek</strong> dikirim, lalu koneksi ditutup.</li><li>Mengunduh banyak objek = butuh banyak koneksi.</li></ul></div>
+      <div class="box"><h4>Persistent HTTP (HTTP 1.1)</h4><ul><li>Koneksi TCP tetap terbuka setelah respons; objek berikutnya dikirim lewat koneksi yang sama.</li><li>RTT untuk semua objek bisa <strong>hanya satu</strong> — waktu respons terpotong separuh.</li></ul></div>
+    </div>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <text x="20" y="20" font-weight="bold" fill="#2563eb">NON-PERSISTENT (per objek)</text>
+        <text x="40" y="45" fill="#425163">Client</text><text x="590" y="45" fill="#425163">Server</text>
+        <g stroke="#cbd5e1"><line x1="40" y1="52" x2="700" y2="52"/><line x1="40" y1="52" x2="40" y2="230"/><line x1="700" y1="52" x2="700" y2="230"/></g>
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="40" y1="70" x2="700" y2="70"/><line x1="700" y1="90" x2="40" y2="90"/>
+          <line x1="40" y1="110" x2="700" y2="110"/><line x1="700" y1="130" x2="40" y2="130"/>
+        </g>
+        <text x="60" y="66" fill="#2563eb">TCP connect</text><text x="60" y="106" fill="#2563eb">req objek</text>
+        <text x="430" y="86" fill="#5b6b7c">accept</text><text x="430" y="126" fill="#5b6b7c">kirim objek</text>
+        <text x="430" y="140" fill="#b45309">tutup koneksi</text>
+        <text x="20" y="170" font-size="11" fill="#5b6b7c">2 RTT per objek. 1 halaman + 8 objek tak paralel:</text>
+        <text x="20" y="185" font-size="11" fill="#5b6b7c">9 objek × 2 RTT = 18 RTT.</text>
+
+        <text x="20" y="212" font-weight="bold" fill="#7c3aed">PERSISTENT + PIPELINING</text>
+        <text x="20" y="235" font-size="11" fill="#5b6b7c">1 koneksi: 1 RTT (koneksi) + 1 RTT (HTML dasar) + 1 RTT (semua objek dipipa) = 3 RTT total.</text>
+      </svg>
+      <div class="cap">Gambar 3 — Non-persistent vs persistent HTTP: berapa RTT yang dibutuhkan.</div>
+    </div>
+
+    <h3>Menghitung waktu respons (RTT)</h3>
+    <p><strong>RTT (Round-Trip Time)</strong> = waktu bagi paket kecil untuk pergi dari client ke server dan kembali.</p>
+    <ul>
+      <li>Non-persistent, per objek: <strong>2 RTT</strong> (1 RTT init koneksi TCP + 1 RTT request &amp; awal respons) + <strong>waktu transmisi file</strong>. Rumus: <code>Response time = 2×RTT + waktu transmisi</code>.</li>
+      <li>Masalah non-persistent: butuh 2 RTT per objek + overhead OS untuk tiap koneksi TCP; browser biasanya membuka beberapa koneksi paralel untuk mengunduh objek rujukan sekaligus.</li>
+      <li>Persistent HTTP/1.1: server membiarkan koneksi terbuka setelah mengirim respons; client mengirim request begitu menemukan objek yang dirujuk.</li>
+    </ul>
+
+    <h3>Format pesan HTTP request</h3>
+    <p>Pesan HTTP berbentuk <strong>ASCII (mudah dibaca manusia)</strong>, berisi <strong>request line</strong>, <strong>header lines</strong>, lalu baris kosong <code>\r\n</code> sebagai penanda akhir header.</p>
+    <pre>
+GET /index.html HTTP/1.1\r\n
+Host: www-net.cs.umass.edu\r\n
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15) Firefox/80.0 \r\n
+Accept: text/html,application/xhtml+xml\r\n
+Accept-Language: en-us,en;q=0.5\r\n
+Accept-Encoding: gzip,deflate\r\n
+Connection: keep-alive\r\n
+\r\n</pre>
+    <p>Baris pertama = <em>request line</em> berisi <strong>method</strong> (GET, POST, HEAD), <strong>URL</strong>, dan <strong>versi</strong>. Format umum request: <code>method sp URL sp version crlf</code> diikuti header <code>field-name: value</code> lalu <code>crlf</code> dan <em>entity body</em>.</p>
+
+    <h3>Method HTTP lainnya</h3>
+    <table>
+      <tr><th>Method</th><th>Fungsi</th></tr>
+      <tr><td><code>POST</code></td><td>Halaman web berisi form; input pengguna dikirim dari client dalam <strong>entity body</strong> pesan POST.</td></tr>
+      <tr><td><code>GET</code></td><td>Bisa juga mengirim data ke server dengan menaruhnya di <strong>URL</strong> setelah tanda <code>?</code>: <code>www.somesite.com/animalsearch?monkeys&amp;banana</code>.</td></tr>
+      <tr><td><code>HEAD</code></td><td>Meminta <strong>header saja</strong> yang akan dikembalikan bila URL diminta via GET (tanpa body).</td></tr>
+      <tr><td><code>PUT</code></td><td><strong>Mengunggah</strong> file baru ke server; mengganti total file di URL dengan isi entity body.</td></tr>
+    </table>
+
+    <h3>Format pesan HTTP response</h3>
+    <pre>
+HTTP/1.1 200 OK\r\n
+Date: Tue, 08 Sep 2020 00:53:20 GMT\r\n
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/7.4.9\r\n
+Last-Modified: Tue, 01 Mar 2016 18:57:50 GMT\r\n
+ETag: "a5b-52d015789ee9e"\r\n
+Accept-Ranges: bytes\r\n
+Content-Length: 2651\r\n
+Content-Type: text/html; charset=UTF-8\r\n
+\r\n
+data data data data data ...</pre>
+    <p>Baris pertama = <strong>status line</strong> <code>(versi, status code, status phrase)</code>, diikuti header lalu data (objek yang diminta).</p>
+
+    <h3>Status codes</h3>
+    <table>
+      <tr><th>Kode</th><th>Arti</th></tr>
+      <tr><td><code>200 OK</code></td><td>Request sukses; objek yang diminta menyusul di pesan ini.</td></tr>
+      <tr><td><code>301 Moved Permanently</code></td><td>Objek dipindah; lokasi baru ada di field <code>Location:</code>.</td></tr>
+      <tr><td><code>400 Bad Request</code></td><td>Server tidak memahami request.</td></tr>
+      <tr><td><code>404 Not Found</code></td><td>Dokumen tidak ditemukan di server ini.</td></tr>
+      <tr><td><code>505 HTTP Version Not Supported</code></td><td>Versi HTTP tidak didukung.</td></tr>
+    </table>
+
+    <div class="box" style="margin:14px 0">
+      <strong>Mencoba HTTP sendiri:</strong> gunakan <code>netcat</code> untuk membuka koneksi TCP ke port 80 server web, ketik request minimal <code>GET /kurose_ross/interactive/index.php HTTP/1.1</code> + <code>Host: gaia.cs.umass.edu</code>, tekan return dua kali, lalu lihat respons dari server (atau amati traffic dengan Wireshark).
+    </div>
+
+    <h3>Cookies: menjaga state walau HTTP stateless</h3>
+    <p>HTTP/GET tidak membawa "state", tetapi <strong>website dan browser memakai cookies</strong> untuk menjaga state antar transaksi. Cookies punya <strong>empat komponen</strong>:</p>
+    <ol>
+      <li>Baris header <code>Set-Cookie</code> dalam pesan <strong>respons</strong> HTTP.</li>
+      <li>Baris header <code>Cookie</code> dalam pesan <strong>request</strong> HTTP berikutnya.</li>
+      <li>Berkas cookie yang disimpan di host pengguna, dikelola browser.</li>
+      <li><strong>Back-end database</strong> di situs web.</li>
+    </ol>
+    <p><strong>Contoh:</strong> Susan pertama kali mengunjungi toko e-commerce. Saat request awal tiba, situs membuat <em>unique ID</em> (cookie) dan entri database untuk ID itu. Request berikutnya dari Susan menyertakan ID cookie → situs bisa "mengenali" Susan.</p>
+    <div class="fig">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="20" y="60" width="130" height="90" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="85" y="100" text-anchor="middle" fill="#1a2330">Client</text>
+        <text x="85" y="118" text-anchor="middle" fill="#5b6b7c">(browser)</text>
+        <rect x="85" y="128" width="70" height="16" rx="3" fill="#fff" stroke="#93b4f8"/>
+        <text x="120" y="140" text-anchor="middle" fill="#2563eb" font-size="10">cookie: 1678</text>
+
+        <rect x="520" y="40" width="150" height="110" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="595" y="66" text-anchor="middle" fill="#1a2330">Amazon server</text>
+        <text x="595" y="84" text-anchor="middle" fill="#5b6b7c">buat ID 1678</text>
+        <rect x="545" y="95" width="100" height="16" rx="3" fill="#fff" stroke="#93b4f8"/>
+        <text x="595" y="107" text-anchor="middle" fill="#2563eb" font-size="10">Set-Cookie: 1678</text>
+        <rect x="540" y="122" width="110" height="22" rx="3" fill="#eef2f7" stroke="#cbd5e1"/>
+        <text x="595" y="137" text-anchor="middle" fill="#5b6b7c" font-size="10">database backend</text>
+
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="150" y1="75" x2="520" y2="70"/>
+          <line x1="520" y1="95" x2="150" y2="80"/>
+        </g>
+        <text x="335" y="66" text-anchor="middle" fill="#2563eb">1. HTTP request</text>
+        <text x="335" y="96" text-anchor="middle" fill="#2563eb">2. respons + Set-Cookie: 1678</text>
+        <line x1="150" y1="140" x2="520" y2="135" stroke="#7c3aed" stroke-width="1.6"/>
+        <text x="335" y="158" text-anchor="middle" fill="#7c3aed">3. Request berikutnya: "Cookie: 1678" → situs mengenali Susan</text>
+      </svg>
+      <div class="cap">Gambar 4 — Alur cookie: respons menetapkan cookie, request berikutnya memakainya.</div>
+    </div>
+    <p><strong>Kegunaan cookies:</strong> otorisasi, keranjang belanja, rekomendasi, state sesi (web e-mail). <strong>Cookies &amp; privasi:</strong> situs bisa belajar banyak tentang Anda. <em>Third-party cookies</em> (tracking cookies) memungkinkan <strong>identitas yang sama dilacak di banyak situs</strong> — bahkan lewat link tak terlihat, tanpa pengguna pernah mengunjungi situs tracker itu. Firefox dan Safari mematikan tracking ini secara default; Chrome menonaktifkannya pada 2023.</p>
+    <div class="callout red"><strong>GDPR (Regulasi Uni Eropa, Mei 2018):</strong> pengenal online (alamat IP, cookie) bila dikombinasikan dapat membuat profil &amp; mengidentifikasi seseorang, sehingga cookie yang mengidentifikasi individu dianggap <strong>data pribadi</strong>. Pengguna memiliki kendali eksplisit apakah cookie diizinkan.</div>
+
+    <h3>Web caches (proxy server)</h3>
+    <ul>
+      <li>Browser dikonfigurasi menunjuk ke <strong>cache lokal</strong>; semua request HTTP dikirim ke cache.</li>
+      <li>Jika objek ada di cache → cache mengembalikan objek (tanpa menyentuh origin server). Jika tidak → cache meminta ke <strong>origin server</strong>, menyimpan salinannya, lalu meneruskannya ke client.</li>
+      <li>Cache berperan <strong>ganda</strong>: server bagi client asal; client bagi origin server.</li>
+    </ul>
+    <p><strong>Mengapa caching?</strong> Mengurangi waktu respons (cache lebih dekat ke client), mengurangi traffic di access link institusi, dan memungkinkan "<em>poor content providers</em>" tetap efektif mengirim konten (like real estate: lokasi adalah segalanya).</p>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="20" y="60" width="90" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="65" y="84" text-anchor="middle" fill="#1a2330">Client</text>
+        <rect x="200" y="35" width="110" height="90" rx="8" fill="#eef2ff" stroke="#c4b5fd"/>
+        <text x="255" y="70" text-anchor="middle" fill="#7c3aed" font-weight="bold">Web cache</text>
+        <text x="255" y="90" text-anchor="middle" fill="#5b6b7c">(proxy lokal)</text>
+        <rect x="500" y="60" width="90" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="545" y="84" text-anchor="middle" fill="#1a2330">Origin server</text>
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="110" y1="75" x2="200" y2="68"/>
+          <path d="M 150 66 l 7 0 m -4 -5 l 5 5 l -5 5" fill="none"/>
+          <line x1="310" y1="68" x2="500" y2="72"/>
+          <path d="M 330 68 l 7 0 m -4 -5 l 5 5 l -5 5" fill="none"/>
+        </g>
+        <g stroke="#7c3aed" stroke-width="1.6">
+          <line x1="255" y1="125" x2="65" y2="105"/><line x1="545" y1="100" x2="255" y2="130"/>
+        </g>
+        <text x="155" y="52" text-anchor="middle" fill="#2563eb">HTTP request</text>
+        <text x="405" y="56" text-anchor="middle" fill="#2563eb">request</text>
+        <text x="150" y="128" text-anchor="middle" fill="#7c3aed">respons objek</text>
+        <text x="415" y="130" text-anchor="middle" fill="#7c3aed">respons objek + cache</text>
+      </svg>
+      <div class="cap">Gambar 5 — Web cache melayani client dari salinan lokal, bukan dari origin server.</div>
+    </div>
+
+    <h4>Contoh perhitungan caching</h4>
+    <p><em>Skema:</em> access link 1.54 Mbps; RTT router institusi → server = 2 detik; objek web = 100 Kbit; rata-rata request 15/detik → data rata-rata ke browser = 1.50 Mbps.</p>
+    <ul>
+      <li><strong>Tanpa cache:</strong> access link utilization = 1.5/1.54 ≈ <strong>0.97</strong> → antrian besar (delay menit). End-end delay ≈ 2 detik + menit + µs.</li>
+      <li><strong>Opsi 1 — beli link lebih cepat (154 Mbps):</strong> utilization turun ke 0.0097, delay milidetik, tapi <em>mahal</em>.</li>
+      <li><strong>Opsi 2 — pasang web cache dengan hit rate 0.4:</strong> hanya 60% request yang harus lewat access link → 0.6 × 1.5 = 0.9 Mbps → utilization <strong>0.58</strong>; rata-rata end-end delay = 0.6×(2.01 s) + 0.4×(msec) ≈ <strong>1.2 detik</strong>. Lebih murah <em>dan</em> lebih cepat dari beli link 154 Mbps.</li>
+    </ul>
+
+    <h3>Conditional GET (cache di sisi browser)</h3>
+    <ul>
+      <li>Tujuan: <strong>jangan kirim objek</strong> jika browser punya salinan cache yang sudah mutakhir.</li>
+      <li>Client menyebut tanggal salinan cache-nya di header request: <code>If-modified-since: &lt;date&gt;</code>.</li>
+      <li>Jika cache masih mutakhir, server membalas <code>HTTP/1.0 304 Not Modified</code> <strong>tanpa objek</strong>. Jika berubah, server membalas <code>200 OK</code> beserta objek baru.</li>
+    </ul>
+
+    <h3>HTTP/2, HTTP/3, dan QUIC</h3>
+    <table>
+      <tr><th>Versi</th><th>Ide utama</th></tr>
+      <tr><td><strong>HTTP 1.1</strong></td><td>HTTP persistent + pipelining beberapa GET pada satu koneksi TCP; server merespons <strong>berurutan (FCFS)</strong> → <em>head-of-line (HOL) blocking</em>: objek kecil bisa menunggu di belakang objek besar; retransmisi juga menghentikan pengiriman.</td></tr>
+      <tr><td><strong>HTTP/2</strong> [RFC 7540]</td><td>Fleksibel: objek dikirim menurut <strong>prioritas</strong> yang diminta client, bisa <strong>push</strong> objek yang tidak diminta, dan objek <strong>dipecah jadi frame</strong> yang dijadwalkan interleave untuk meredakan HOL. Method, status code, header sebagian besar sama dengan HTTP/1.1.</td></tr>
+      <tr><td><strong>HTTP/3</strong></td><td>Menambahkan keamanan dan <em>error/congestion control per-objek</em> di atas <strong>UDP</strong> via <strong>QUIC</strong> — karena HTTP/2 di atas satu koneksi TCP tetap cacat saat ada kehilangan paket (semua transmisi berhenti) dan tidak ada keamanan di TCP vanilla.</td></tr>
+    </table>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <text x="20" y="20" font-weight="bold" fill="#2563eb">HTTP/1.1 — HOL blocking</text>
+        <g fill="#eaf1ff" stroke="#93b4f8">
+          <rect x="30" y="40" width="40" height="26" rx="4"/><rect x="72" y="40" width="40" height="26" rx="4"/>
+          <rect x="114" y="40" width="40" height="26" rx="4"/><rect x="156" y="40" width="40" height="26" rx="4"/>
+        </g>
+        <g fill="#425163" font-size="10"><text x="50" y="57" text-anchor="middle">O1</text><text x="92" y="57" text-anchor="middle">O2</text><text x="134" y="57" text-anchor="middle">O3</text><text x="176" y="57" text-anchor="middle">O4</text></g>
+        <rect x="30" y="78" width="150" height="18" rx="4" fill="#fff" stroke="#dc2626"/>
+        <text x="105" y="91" text-anchor="middle" fill="#dc2626" font-size="10">O2,O3,O4 menunggu O1 (besar)</text>
+
+        <text x="20" y="120" font-weight="bold" fill="#2563eb">HTTP/2 — frame interleave + prioritas</text>
+        <g fill="#eef2ff" stroke="#c4b5fd">
+          <rect x="30" y="140" width="40" height="26" rx="4"/><rect x="72" y="140" width="40" height="26" rx="4"/>
+          <rect x="114" y="140" width="40" height="26" rx="4"/><rect x="156" y="140" width="40" height="26" rx="4"/>
+        </g>
+        <g fill="#425163" font-size="10"><text x="50" y="157" text-anchor="middle">O2</text><text x="92" y="157" text-anchor="middle">O3</text><text x="134" y="157" text-anchor="middle">O4</text><text x="176" y="157" text-anchor="middle">O1...dl</text></g>
+        <rect x="30" y="176" width="150" height="18" rx="4" fill="#fff" stroke="#059669"/>
+        <text x="105" y="189" text-anchor="middle" fill="#059669" font-size="10">O2,O3,O4 cepat; O1 sedikit terlambat</text>
+      </svg>
+      <div class="cap">Gambar 6 — HTTP/2 memecah objek jadi frame dan menjadwalkannya (shortest job first → rata-rata delay menurun).</div>
+    </div>
+
+    <h4>QUIC: Quick UDP Internet Connections</h4>
+    <ul>
+      <li>Protokol <strong>application layer di atas UDP</strong> untuk mempercepat HTTP — dipakai banyak server Google (Chrome, YouTube mobile).</li>
+      <li>Tumpukan HTTP/3: <code>HTTP/2 (slimmed) → QUIC → UDP → IP</code> (bukan <code>HTTP/2 → TLS → TCP → IP</code>).</li>
+      <li>Kontrol error &amp; kongesti menyerupai TCP (relative terhadap algoritma TCP yang terkenal).</li>
+    </ul>
+    <p><strong>Connection establishment:</strong> TCP (reliability, congestion) + TLS (authentication, crypto) butuh <strong>dua handshake serial</strong>. QUIC menggabungkannya menjadi <strong>satu handshake 1 RTT</strong>. Bahkan dengan <em>session ticket</em> dari koneksi pertama (di-cache client), koneksi kedua bisa menjadi <strong>0-RTT</strong>: client langsung mengirim data karena sudah punya kunci enkripsi.</p>
+    <div class="analogi">
+      <strong class="title">Analogi: Web itu seperti toko swalayan</strong>
+      HTTP stateless = <strong>kasir yang tidak mengingat Anda</strong> setiap kali antre — setiap transaksi berdiri sendiri. Cookies = <strong>kartu anggota</strong> yang pas Anda tunjukkan, kasir langsung tahu riwayat belanja Anda (dan toko lain yang melihat kartu Anda bisa melacak Anda juga). Web cache = <strong>etalase gigi di lingkungan Anda</strong>: barang yang sama diambil dari gudang dekat, bukan digores dari pusat distribusi di luar kota. HTTP/2 &amp; HTTP/3 = kasir baru yang <strong>membuat pesanan Anda lebih dulu didahulukan</strong> dan memuat barang besar sekaligus kecil secara bersamaan, tidak menunggu satu gerobak besar selesai.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3 ============ -->
+  <section>
+    <h2><span class="num">3</span> E-mail: SMTP dan IMAP</h2>
+    <p class="lead">E-mail punya tiga komponen utama: <strong>user agents</strong>, <strong>mail servers</strong>, dan protokol pengirim <strong>SMTP</strong>.</p>
+
+    <h3>Komponen e-mail</h3>
+    <ul>
+      <li><strong>User Agent (a.k.a. "mail reader"):</strong> alat untuk menulis, menyunting, dan membaca e-mail — contoh: Outlook, aplikasi Mail di iPhone. Pesan keluar &amp; masuk disimpan di server.</li>
+      <li><strong>Mail server:</strong> punya <em>user mailbox</em> (pesan masuk untuk pengguna) dan <em>message queue</em> (pesan keluar yang menunggu dikirim).</li>
+      <li><strong>SMTP</strong> bekerja <strong>antar mail server</strong>: server pengirim (acting as <em>client</em>) menghubungi server penerima (acting as <em>server</em>).</li>
+    </ul>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="20" y="55" width="80" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="60" y="79" text-anchor="middle" fill="#1a2330">User agent</text>
+        <rect x="170" y="55" width="120" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="230" y="79" text-anchor="middle" fill="#1a2330">Mail server A</text>
+        <rect x="430" y="55" width="120" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="490" y="79" text-anchor="middle" fill="#1a2330">Mail server B</text>
+        <rect x="620" y="55" width="80" height="40" rx="8" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="660" y="79" text-anchor="middle" fill="#1a2330">User agent</text>
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="100" y1="65" x2="170" y2="65"/>
+          <line x1="290" y1="75" x2="430" y2="75"/>
+          <line x1="550" y1="65" x2="620" y2="65"/>
+        </g>
+        <text x="135" y="52" text-anchor="middle" fill="#2563eb">SMTP</text>
+        <text x="360" y="60" text-anchor="middle" fill="#2563eb">SMTP (antar server)</text>
+        <text x="585" y="52" text-anchor="middle" fill="#2563eb">IMAP/HTTP</text>
+      </svg>
+      <div class="cap">Gambar 7 — SMTP untuk kirim antar mail server; protokol akses (IMAP/HTTP) untuk mengambil e-mail dari server.</div>
+    </div>
+
+    <h3>SMTP [RFC 5321]</h3>
+    <ul>
+      <li>Memakai <strong>TCP</strong> untuk mentransfer pesan secara andal dari client (mail server yang memulai koneksi) ke server, <strong>port 25</strong>.</li>
+      <li><strong>Transfer langsung:</strong> server pengirim ke server penerima.</li>
+      <li><strong>Tiga fase:</strong> (1) <em>handshaking</em> (sapaan/HELO), (2) <em>transfer pesan</em>, (3) <em>closure</em>.</li>
+      <li>Interaksi <strong>command/response</strong> ala HTTP: perintah berupa teks ASCII, jawaban berupa kode status + frase.</li>
+    </ul>
+    <pre>
+S: 220 hamburger.edu
+C: HELO crepes.fr
+S: 250 Hello crepes.fr, pleased to meet you
+C: MAIL FROM: &lt;alice@crepes.fr&gt;
+S: 250 alice@crepes.fr... Sender ok
+C: RCPT TO: &lt;bob@hamburger.edu&gt;
+S: 250 bob@hamburger.edu ... Recipient ok
+C: DATA
+S: 354 Enter mail, end with "." on a line by itself
+C: Do you like ketchup?
+C: How about pickles?
+C: .
+S: 250 Message accepted for delivery
+C: QUIT
+S: 221 hamburger.edu closing connection</pre>
+
+    <h3>Skenario: Alice mengirim e-mail ke Bob</h3>
+    <ol>
+      <li>Alice memakai UA untuk menulis pesan "to" <code>bob@someschool.edu</code>.</li>
+      <li>UA Alice mengirim pesan ke mail server-nya dengan SMTP; pesan masuk <strong>message queue</strong>.</li>
+      <li>Sisi <em>client</em> SMTP di mail server Alice membuka koneksi TCP ke mail server Bob.</li>
+      <li>Client SMTP mengirim pesan Alice lewat koneksi TCP.</li>
+      <li>Mail server Bob menaruh pesan di <strong>mailbox</strong> Bob.</li>
+      <li>Bob memanggil user agent-nya untuk membaca pesan.</li>
+    </ol>
+
+    <h3>Observasi tentang SMTP</h3>
+    <ul>
+      <li>SMTP memakai <strong>persistent connections</strong>.</li>
+      <li>SMTP menuntut pesan (header &amp; body) dalam <strong>7-bit ASCII</strong>.</li>
+      <li>Server SMTP memakai <code>CRLF.CRLF</code> untuk menentukan akhir pesan.</li>
+      <li><strong>Bandingkan dengan HTTP:</strong> HTTP = <em>client pull</em> (client menarik konten), SMTP = <em>client push</em> (sender mendorong); keduanya interaksi command/response ASCII; HTTP membungkus tiap objek dalam satu message, SMTP mengirim banyak objek dalam <strong>multipart message</strong>.</li>
+    </ul>
+
+    <h3>Format pesan e-mail</h3>
+    <p>SMTP (RFC 5321) mengatur pertukaran; <strong>RFC 2822</strong> menentukan <em>sintaks pesan e-mail itu sendiri</em> (seperti HTML untuk halaman web). Pesan terdiri dari <strong>header</strong>, <strong>body</strong>, dipisah <strong>baris kosong</strong>. Header misalnya <code>To:</code>, <code>From:</code>, <code>Subject:</code> — beda dengan perintah SMTP <code>MAIL FROM:</code>/<code>RCPT TO:</code>! Body hanya karakter <strong>ASCII</strong>.</p>
+
+    <h3>Protokol akses e-mail</h3>
+    <ul>
+      <li>SMTP menangani <strong>pengiriman/penyimpanan</strong> pesan ke server penerima; untuk <strong>mengambil</strong> dari server dibutuhkan <em>mail access protocol</em>: <strong>IMAP</strong>.</li>
+      <li><strong>IMAP</strong> [RFC 3501]: pesan disimpan di server; IMAP menyediakan <em>retrieval, deletion</em>, dan <em>folders</em> pesan yang tersimpan di server.</li>
+      <li><strong>HTTP:</strong> Gmail, Hotmail, Yahoo!Mail menyediakan antarmuka web di atas SMTP (kirim) dan IMAP/POP (ambil).</li>
+    </ul>
+    <div class="analogi">
+      <strong class="title">Analogi: Pos dan kotak surat</strong>
+      <strong>SMTP</strong> = kurir yang membawa surat dari kantor pos Alice ke kantor pos Bob (MTA ke MTA). <strong>Mail server</strong> = kantor pos: kotak surat (mailbox) untuk surat masuk dan <em>message queue</em> untuk surat yang menunggu diantar. <strong>IMAP</strong> = Anda mengambil surat dari kotak di kantor pos dan bisa mengatur isinya dalam map-map — semua tetap tersimpan di server. <strong>Webmail (HTTP)</strong> = Anda membaca kotak surat lewat petugas yang membacakannya untuk Anda di kantor pos.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4 ============ -->
+  <section>
+    <h2><span class="num">4</span> DNS: Domain Name System</h2>
+    <p class="lead">Manusia mudah mengingat nama (<code>cs.umass.edu</code>), mesin mudah memproses angka (IP 32-bit). DNS menjembatani keduanya.</p>
+
+    <h3>Masalah &amp; solusi</h3>
+    <ul>
+      <li>Internet hosts &amp; router diidentifikasi dengan <strong>IP address</strong> (untuk mengalamati datagram) dan <strong>"name"</strong> (dipakai manusia). Pertanyakannya: bagaimana memetakan antara keduanya?</li>
+      <li><strong>DNS</strong> = <em>distributed database</em> yang diimplementasikan sebagai <strong>hierarki banyak name server</strong> + <strong>application-layer protocol</strong>: host &amp; server DNS berkomunikasi untuk menerjemahkan nama. Catatan: ini fungsi inti Internet yang justru diimplementasikan sebagai protokol <em>application layer</em> — kompleksitas ada di <strong>tepi jaringan</strong>.</li>
+    </ul>
+    <div class="callout warn"><strong>Mengapa tidak DNS terpusat?</strong> Jawabannya: <strong>tidak skalabel!</strong> Satu titik kegagalan, volume traffic raksasa, database jauh dari pemakai, dan sulit dirawat. Bandingkan: server DNS Comcast saja menangani 600 miliar query/hari; server DNS Akamai menangani 2,2 triliun query/hari.</div>
+
+    <p><strong>Layanan DNS:</strong> (1) penerjemahan <em>hostname → IP</em>, (2) <em>host aliasing</em> (canonical &amp; alias), (3) <em>mail server aliasing</em>, (4) <em>load distribution</em> (satu nama dipetakan ke banyak IP untuk web server replikasi).</p>
+    <p><strong>Karakter DNS:</strong> database terdistribusi raksasa (~miliar record, tiap record sederhana), melayani triliunan query/hari dengan jauh lebih banyak <em>read</em> daripada <em>write</em>, performa kritikal (hampir setiap transaksi internet menyentuh DNS; perbedaan <em>msec</em> penting), terdesentralisasi secara organisasi &amp; fisik, dan harus <em>"bulletproof"</em> (reliabel &amp; aman).</p>
+
+    <h3>Hierarki DNS</h3>
+    <ul>
+      <li><strong>Root name servers:</strong> kontak terakhir (official, <em>contact-of-last-resort</em>) bagi name server yang tak bisa menyelesaikan nama; fungsi internet yang sangat penting dan <strong>dilindungi DNSSEC</strong> (autentikasi, integritas). Ada 13 root logical "server" di dunia; tiap "server" direplikasi berkali-kali. ICANN mengelola domain root.</li>
+      <li><strong>TLD (Top-Level Domain) servers:</strong> bertanggung jawab atas <code>.com</code>, <code>.org</code>, <code>.net</code>, <code>.edu</code>, dan TLD negara seperti <code>.cn</code>, <code>.uk</code>, <code>.fr</code>, <code>.ca</code>, <code>.jp</code>. Contoh operator: Network Solutions (.com/.net), Educause (.edu).</li>
+      <li><strong>Authoritative DNS servers:</strong> server DNS organisasi sendiri yang memberi pemetaan hostname→IP resmi untuk host bernamanya; bisa dikelola organisasi atau penyedia layanan.</li>
+      <li><strong>Local DNS server:</strong> saat host melakukan query, ia dikirim ke <em>local DNS server</em>-nya; menjawab dari <em>cache</em> lokal (bisa kedaluwarsa!) atau meneruskan ke hierarki. Setiap ISP punya server ini (temukan via <code>scutil --dns</code> di macOS, <code>ipconfig /all</code> di Windows). Secara ketat ia bukan bagian dari hierarki.</li>
+    </ul>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 270" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <ellipse cx="360" cy="35" rx="110" ry="26" fill="#eaf1ff" stroke="#2563eb"/>
+        <text x="360" y="40" text-anchor="middle" fill="#1a2330" font-weight="bold">Root DNS servers</text>
+        <ellipse cx="160" cy="110" rx="115" ry="26" fill="#eef2ff" stroke="#7c3aed"/>
+        <text x="160" y="115" text-anchor="middle" fill="#1a2330" font-weight="bold">.com TLD</text>
+        <ellipse cx="560" cy="110" rx="115" ry="26" fill="#eef2ff" stroke="#7c3aed"/>
+        <text x="560" y="115" text-anchor="middle" fill="#1a2330" font-weight="bold">.org TLD</text>
+        <ellipse cx="360" cy="185" rx="120" ry="26" fill="#eef2ff" stroke="#7c3aed"/>
+        <text x="360" y="190" text-anchor="middle" fill="#1a2330" font-weight="bold">.edu TLD</text>
+        <g fill="#d1fae5" stroke="#059669">
+          <ellipse cx="160" cy="250" rx="115" ry="20"/>
+          <ellipse cx="560" cy="250" rx="115" ry="20"/>
+        </g>
+        <text x="160" y="255" text-anchor="middle" fill="#1a2330" font-weight="bold">authoritative</text>
+        <text x="560" y="255" text-anchor="middle" fill="#1a2330" font-weight="bold">authoritative</text>
+        <text x="350" y="175" fill="#5b6b7c">…dan seterusnya (hierarki)</text>
+        <g stroke="#94a3b8" stroke-width="1.4">
+          <line x1="300" y1="55" x2="190" y2="88"/><line x1="420" y1="55" x2="360" y2="88"/><line x1="300" y1="55" x2="500" y2="90"/>
+          <line x1="170" y1="136" x2="170" y2="228"/><line x1="550" y1="136" x2="550" y2="228"/>
+          <line x1="360" y1="160" x2="360" y2="185"/>
+        </g>
+        <text x="80" y="235" fill="#5b6b7c">amazon.com / pbs.org ...</text>
+        <text x="490" y="235" fill="#5b6b7c">nyu.edu / umass.edu ...</text>
+        <text x="360" y="90" text-anchor="middle" fill="#5b6b7c">.com, .org, .edu</text>
+      </svg>
+      <div class="cap">Gambar 8 — Hierarki database DNS: root → TLD → authoritative. Client meminta www.amazon.com: query ke root → ke .com → ke amazon.com.</div>
+    </div>
+
+    <h3>Iterated vs recursive query</h3>
+    <div class="grid2">
+      <div class="box"><h4>Iterated query</h4>
+        <p><em>Server yang dikontak membalas dengan nama server yang harus dikontak berikutnya:</em> "Saya tidak tahu nama ini, tapi tanyakan pada server ini." Beban penyelesaian ada di client/local server. Sebuah local server yang mengirim 3 query ke hierarki (root→TLD→authoritative) demi satu nama memakai pola ini.</p>
+      </div>
+      <div class="box"><h4>Recursive query</h4>
+        <p><em>Beban penyelesaian diletakkan pada name server yang dikontak:</em> ia yang meneruskan ke hierarki dan membalikkan jawaban final. Konsekuensi: beban berat di level atas hierarki.</p>
+      </div>
+    </div>
+    <div class="fig">
+      <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <text x="20" y="20" font-weight="bold" fill="#2563eb">ITERATED (host eng.nyu.edu &rarr; gaia.cs.umass.edu)</text>
+        <rect x="20" y="40" width="120" height="40" rx="8" fill="#93b4f8"/>
+        <text x="80" y="64" text-anchor="middle" fill="#fff">host (client)</text>
+        <rect x="170" y="180" width="120" height="40" rx="8" fill="#eef2f7" stroke="#94a3b8"/>
+        <text x="230" y="188" text-anchor="middle" fill="#1a2330">local DNS</text>
+        <text x="230" y="203" text-anchor="middle" fill="#5b6b7c">dns.nyu.edu</text>
+        <rect x="480" y="40" width="120" height="40" rx="8" fill="#eef2ff" stroke="#7c3aed"/>
+        <text x="540" y="64" text-anchor="middle" fill="#1a2330">TLD .edu</text>
+        <rect x="590" y="180" width="120" height="40" rx="8" fill="#d1fae5" stroke="#059669"/>
+        <text x="650" y="204" text-anchor="middle" fill="#1a2330">authoritative</text>
+        <text x="650" y="180" text-anchor="middle" fill="#5b6b7c">dns.cs.umass.edu</text>
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="80" y1="80" x2="230" y2="180"/><line x1="230" y1="180" x2="540" y2="80"/>
+          <line x1="540" y1="80" x2="650" y2="180"/><line x1="650" y1="180" x2="230" y2="180"/>
+          <line x1="230" y1="180" x2="80" y2="80"/>
+        </g>
+        <g fill="#2563eb" font-size="11"><text x="140" y="125">1&rarr;2</text><text x="370" y="115">3&rarr;4</text><text x="600" y="120">5&rarr;6</text><text x="160" y="165">7&rarr;8</text></g>
+        <text x="20" y="230" fill="#5b6b7c" font-size="11">Tiap panah bolak-balik = pertanyaan dijawab dengan "tanyakan server ini". 3 pasang pesan lokal&rarr;hierarki = 6 pesan.</text>
+      </svg>
+      <div class="cap">Gambar 9 — Iterated query: local DNS di-bounce ke hierarki, membawa jawaban kembali ke host.</div>
+    </div>
+
+    <h3>Caching DNS</h3>
+    <ul>
+      <li>Begitu sebuah name server mempelajari pemetaan, ia <strong>meng-cache-nya</strong> dan langsung membalas dari cache.</li>
+      <li>Memperbaiki <strong>waktu respons</strong>; entri cache <strong>kadaluwarsa setelah TTL</strong>.</li>
+      <li>TLD servers biasanya di-cache di local name servers.</li>
+      <li>Entri bisa <strong>kedaluwarsa/out-of-date</strong>: jika host berganti IP, perubahan mungkin tidak diketahui Internet-wide sampai semua TTL habis. Maka DNS adalah <em>best-effort</em> name-to-address translation!</li>
+    </ul>
+
+    <h3>Resource Records (RR)</h3>
+    <p>DNS = database terdistribusi yang menyimpan <strong>resource records</strong> dalam format: <code>(name, value, type, ttl)</code>.</p>
+    <table>
+      <tr><th>Type</th><th>name =</th><th>value =</th></tr>
+      <tr><td><code>A</code></td><td>hostname</td><td>alamat IP</td></tr>
+      <tr><td><code>NS</code></td><td>domain (mis. <code>foo.com</code>)</td><td>hostname dari authoritative name server domain itu</td></tr>
+      <tr><td><code>CNAME</code></td><td>nama alias untuk nama canonical (asli)</td><td>nama canonical. Contoh: <code>www.ibm.com</code> sebenarnya <code>servereast.backup2.ibm.com</code></td></tr>
+      <tr><td><code>MX</code></td><td>nama domain</td><td>nama SMTP mail server yang terkait</td></tr>
+    </table>
+
+    <h3>Format pesan DNS</h3>
+    <p>Query dan reply memakai <strong>format yang sama</strong>: header (identification 16-bit — reply memakai nomor yang sama dengan query, plus flags: query/reply, recursion desired/available, reply authoritative) diikuti bagian questions, answers, authority, dan additional info (masing-masing jumlah bervariasi).</p>
+
+    <h3>Memasukkan nama Anda ke DNS</h3>
+    <ol>
+      <li>Daftarkan nama (mis. <code>networkutopia.com</code>) ke <strong>registrar</strong> (mis. Network Solutions).</li>
+      <li>Berikan nama &amp; IP authoritative name server Anda (primary &amp; secondary).</li>
+      <li>Registrar menyisipkan RR <code>NS</code> dan <code>A</code> ke TLD server <code>.com</code>: <code>(networkutopia.com, dns1.networkutopia.com, NS)</code> dan <code>(dns1.networkutopia.com, 212.212.212.1, A)</code>.</li>
+      <li>Buat authoritative server lokal di IP tersebut: record <code>A</code> untuk <code>www.networkutopia.com</code>, record <code>MX</code> untuk domain.</li>
+    </ol>
+
+    <h3>Keamanan DNS</h3>
+    <ul>
+      <li><strong>Serangan DDoS</strong>: bombardir root servers (sejauh ini gagal — ada traffic filtering, dan local DNS meng-cache IP TLD sehingga root bisa dilewati); bombardir TLD servers berpotensi lebih berbahaya.</li>
+      <li><strong>Spoofing attacks</strong>: intercept query DNS dan membalas dengan jawaban palsu → <strong>DNS cache poisoning</strong>.</li>
+      <li>Pertahanan: <strong>DNSSEC</strong> [RFC 4033] — layanan autentikasi.</li>
+    </ul>
+    <div class="analogi">
+      <strong class="title">Analogi: DNS adalah buku telepon dunia</strong>
+      Anda tidak menghafal nomor teman — Anda cari nama di <strong>buku telepon</strong>. Tapi satu buku raksasa di satu kota tak akan sanggup menampung semua orang dan satu antrean raksasa. Maka DNS seperti <strong>direktori telepon seluler yang saling dirujuk</strong>: tanya "informasi", diarahkan ke "kode area" (TLD), lalu ke "nomor rumah" (authoritative). Anda juga punya <strong>memori singkat</strong> (cache) — makin cepat, tapi ingatan itu bisa basi. <strong>DNSSEC</strong> = tanda tangan resmi di tiap halaman direktori agar nomor tidak diotak-atik penipu.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5 ============ -->
+  <section>
+    <h2><span class="num">5</span> Video Streaming &amp; CDN</h2>
+    <p class="lead">Video streaming adalah konsumen terbesar bandwidth internet: Netflix, YouTube, Amazon Prime menanggung ~80% traffic ISP residensial (2020).</p>
+
+    <h3>Konteks &amp; tantangan</h3>
+    <ul>
+      <li><strong>Skala:</strong> bagaimana menjangkau ~1 miliar pengguna?</li>
+      <li><strong>Heterogenitas:</strong> pengguna punya kapabilitas berbeda (kabel vs seluler; bandwidth kaya vs terbatas).</li>
+      <li>Solusi: <strong>infrastruktur terdistribusi di application layer</strong>.</li>
+    </ul>
+
+    <h3>Video: dari gambar ke bit</h3>
+    <ul>
+      <li>Video = urutan gambar (mis. 24–30 gambar/detik). Gambar digital = larik <strong>piksel</strong>, tiap piksel diwakili bit.</li>
+      <li><strong>Coding</strong> memakai redundansi untuk mengurangi bit:<br>
+        — <strong>Spatial coding (dalam satu gambar):</strong> alih-alih mengirim N nilai warna sama (semua ungu), kirim dua nilai: warna (ungu) + jumlah pengulangan (N).<br>
+        — <strong>Temporal coding (antar gambar):</strong> alih-alih mengirim gambar penuh di frame i+1, kirim <em>selisihnya</em> saja dari frame i.
+      </li>
+      <li><strong>CBR</strong> (constant bit rate): laju encoding tetap. <strong>VBR</strong> (variable bit rate): laju berubah-ubah sesuai seberapa banyak coding spasial/temporal diterapkan.</li>
+      <li>Contoh: MPEG 1 (CD-ROM) 1.5 Mbps; MPEG 2 (DVD) 3–6 Mbps; MPEG 4 (umum di internet) 64 Kbps–12 Mbps.</li>
+    </ul>
+
+    <h3>Streaming stored video</h3>
+    <p>Video direkam lalu disimpan. Saat streaming, client memutar bagian awal video <em>sementara</em> server masih mengirim bagian akhir. Tantangan utama:</p>
+    <ul>
+      <li><strong>Continuous playout constraint:</strong> selama pemutaran, timing pemutaran harus cocok dengan timing asli — tetapi delay jaringan <strong>bervariasi (jitter)</strong> → butuh <strong>buffer di sisi client</strong>.</li>
+      <li><strong>Interaktivitas client:</strong> pause, fast-forward, rewind, loncat.</li>
+      <li>Paket video dapat hilang dan perlu di-retransmisi.</li>
+    </ul>
+    <div class="fig">
+      <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <text x="20" y="20" font-weight="bold" fill="#2563eb">Playout buffering</text>
+        <g stroke="#2563eb" stroke-width="1.6">
+          <line x1="40" y1="70" x2="40" y2="180"/><line x1="40" y1="180" x2="680" y2="180"/>
+        </g>
+        <text x="20" y="66" fill="#5b6b7c">data (chunk)</text><text x="40" y="196" fill="#5b6b7c">waktu</text>
+        <path d="M 40 170 L 680 60" fill="none" stroke="#7c3aed" stroke-width="2"/>
+        <path d="M 40 170 L 260 140 L 480 130 L 680 115" fill="none" stroke="#059669" stroke-width="2"/>
+        <text x="300" y="60" fill="#7c3aed">video diterima (delay jaringan bervariasi)</text>
+        <text x="300" y="150" fill="#059669">video diputar di client</text>
+        <rect x="250" y="120" width="120" height="26" rx="4" fill="#eef2ff" stroke="#7c3aed"/>
+        <text x="310" y="137" text-anchor="middle" fill="#7c3aed" font-size="10">playout delay (buffer)</text>
+      </svg>
+      <div class="cap">Gambar 10 — Buffer client menyerap variasi delay (jitter) agar pemutaran tetap mulus. Pada saat t₀, 6 chunk sudah tiba dan 2 sudah diputar → 4 chunk di buffer.</div>
+    </div>
+
+    <h3>DASH: Dynamic Adaptive Streaming over HTTP</h3>
+    <div class="grid2">
+      <div class="box"><h4>Peran server</h4><ul>
+        <li>Membagi file video jadi <strong>banyak chunk</strong>.</li>
+        <li>Tiap chunk di-encode pada <strong>banyak laju</strong> berbeda; tiap laju disimpan di file berbeda.</li>
+        <li>File direplikasi di berbagai node CDN.</li>
+        <li>Berkas <strong>manifest</strong> menyediakan URL untuk chunk-chunk berbeda.</li>
+      </ul></div>
+      <div class="box"><h4>Peran client ("intelligence" di client)</h4><ul>
+        <li>Secara periodik <strong>memperkirakan bandwidth</strong> server→client.</li>
+        <li>Konsultasi manifest; <strong>meminta satu chunk per saat</strong> dengan memilih laju encoding maksimum yang bisa ditopang bandwidth sekarang.</li>
+        <li>Bisa mengubah laju dari waktu ke waktu, dan mengambil dari <strong>server yang berbeda</strong>.</li>
+      </ul></div>
+    </div>
+    <p>Client yang menentukan: <em>kapan</em> meminta chunk (agar buffer tidak kelaparan/overload), <em>laju apa</em> (kualitas naik saat bandwidth banyak), dan <em>dari URL mana</em> (server yang dekat / bandwidth tinggi). <br>
+    <strong>Ringkasan: Streaming video = encoding + DASH + playout buffering.</strong></p>
+
+    <h3>Content Distribution Networks (CDN)</h3>
+    <p>Tantangan: bagaimana menjalankan konten dari jutaan video menuju ratusan ribu pengguna bersamaan? <em>Opsi 1 — mega-server tunggal:</em> satu titik kegagalan, titik kemacetan jaringan, jalur panjang ke client jauh → <strong>tidak skalabel</strong>.</p>
+    <p><em>Opsi 2 — simpan/sajikan salinan video di banyak situs terdistribusi (CDN):</em></p>
+    <div class="grid2">
+      <div class="box"><h4>Enter deep</h4><p>Dorong server CDN <strong>jauh masuk ke banyak access network</strong>, dekat pengguna. Contoh: Akamai ±240.000 server di &gt;120 negara (2015).</p></div>
+      <div class="box"><h4>Bring home</h4><p>Jumlah lebih kecil (puluhan) cluster besar di <strong>POPs</strong> dekat access network. Contoh: dipakai Limelight.</p></div>
+    </div>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="300" y="80" width="120" height="44" rx="8" fill="#2563eb"/>
+        <text x="360" y="107" text-anchor="middle" fill="#fff" font-weight="bold">Origin</text>
+        <g fill="#d1fae5" stroke="#059669">
+          <rect x="40" y="20" width="110" height="40" rx="8"/><rect x="40" y="80" width="110" height="40" rx="8"/>
+          <rect x="40" y="140" width="110" height="40" rx="8"/>
+          <rect x="570" y="20" width="110" height="40" rx="8"/><rect x="570" y="80" width="110" height="40" rx="8"/>
+          <rect x="570" y="140" width="110" height="40" rx="8"/>
+        </g>
+        <g fill="#065f46" text-anchor="middle" font-size="11">
+          <text x="95" y="44">CDN node</text><text x="95" y="104">CDN node</text><text x="95" y="164">CDN node</text>
+          <text x="625" y="44">CDN node</text><text x="625" y="104">CDN node</text><text x="625" y="164">CDN node</text>
+        </g>
+        <g stroke="#94a3b8" stroke-width="1.5">
+          <line x1="150" y1="40" x2="300" y2="92"/><line x1="150" y1="100" x2="300" y2="100"/>
+          <line x1="150" y1="160" x2="300" y2="108"/><line x1="570" y1="40" x2="420" y2="92"/>
+          <line x1="570" y1="100" x2="420" y2="100"/><line x1="570" y1="160" x2="420" y2="108"/>
+        </g>
+        <g fill="#64748b" font-size="11">
+          <text x="40" y="205">Pengguna dekat Kota A</text><text x="520" y="205">Pengguna dekat Kota B</text>
+        </g>
+      </svg>
+      <div class="cap">Gambar 11 — Konten direplikasi ke banyak node CDN di berbagai lokasi; client mengambil dari node terdekat.</div>
+    </div>
+
+    <h3>Studi kasus: Netflix (OTT)</h3>
+    <ol>
+      <li>Bob mengelola akun Netflix (server registrasi/akuntansi Netflix di <strong>Amazon cloud</strong>).</li>
+      <li>Bob menjelajah video Netflix; berkas <strong>manifest</strong> untuk video tertentu dikembalikan.</li>
+      <li>Pemilihan server <strong>DASH</strong> dikontak; streaming dimulai.</li>
+      <li>Netflix menyimpan salinan konten di node <strong>OpenConnect CDN</strong> di seluruh dunia; manifest menunjuk salinan; client mengambil pada laju tertinggi yang didukung, dan bisa pindah laju/salinan jika jalur padat.</li>
+    </ol>
+    <p><em>OTT = "over-the-top":</em> host-to-host communication as a service yang mengatasi Internet padat dari "tepi". Tantangan OTT: konten apa ditaruh di node CDN mana? Dari node mana mengambil, pada laju berapa?</p>
+
+    <h3>Bonus materi: Latensi vs Throughput (dan TTFT)</h3>
+    <table>
+      <tr><th></th><th>Latensi (delay)</th><th>Throughput</th></tr>
+      <tr><td><strong>Satuan</strong></td><td>milidetik</td><td>bit per detik</td></tr>
+      <tr><td><strong>Arti</strong></td><td>waktu bagi satu hal kecil untuk tiba — ditentukan jarak &amp; antrian</td><td>bit per detik yang bisa dipertahankan — ditentukan link tersempit di jalur</td></tr>
+      <tr><td><strong>Yang tinggal di sini</strong></td><td>balasan AI: TTFT</td><td>video: bitrate harus terpenuhi</td></tr>
+      <tr><td><strong>Perbaikan yang SALAH</strong></td><td>pipa lebih gemuk tidak menyelesaikan jarak/antrian</td><td>jalur lebih pendek tidak menyelesaikan link sempit</td></tr>
+    </table>
+    <ul>
+      <li><strong>TTFT (Time To First Token)</strong> untuk AI = dari menekan Enter sampai karakter pertama di layar. Isi TTFT: DNS + TCP + TLS, antrean di server, membaca seluruh prompt, sampai token pertama. Setiap segmen yang dipersingkat membuat balasan terasa lebih cepat.</li>
+      <li>Model AI <strong>menghasilkan satu token pada satu waktu</strong> dan masing-masing <em>didorong</em> ke browser begitu lahir (satu respons HTTP berumur panjang, di-stream) — sebab itulah balasan AI terasa "diketik": bottleneck-nya server, bukan jaringan.</li>
+      <li>"Last mile" masalah: <em>buffer menyembunyikan latency untuk video; tidak ada yang menyembunyikan token pertama yang hilang</em>. Membuat banyak pengguna sekaligus di server menaikkan throughput tapi menaikkan latency.</li>
+    </ul>
+    <div class="analogi">
+      <strong class="title">Analogi: Restoran dan pipa</strong>
+      <strong>Video streaming</strong> = air yang harus terus mengalir: yang penting <em>debit</em> (throughput), ditentukan pipa tersempit; buffer bak penampungan menyembunyikan goyangan aliran. <strong>Balasan AI</strong> = pesan yang diketik langsung di hadapan Anda: yang penting <em>berapa cepat kata pertama muncul dan jarak antar kata</em> (latensi), bukan debitnya. <strong>CDN</strong> = gerai franchise di tiap kecamatan: Anda membeli es krim dari gerai terdekat, bukan mengambil dari pabrik di luar pulau.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6 ============ -->
+  <section>
+    <h2><span class="num">6</span> Socket Programming (UDP &amp; TCP)</h2>
+    <p class="lead">Tujuan: belajar membangun aplikasi client/server yang berkomunikasi memakai soket — "pintu" antara proses aplikasi dan protokol transport end-to-end.</p>
+
+    <p>Ada <strong>dua tipe soket</strong> untuk dua layanan transport: <strong>UDP</strong> (<em>unreliable datagram</em>) dan <strong>TCP</strong> (<em>reliable byte-stream</em>). Aplikasi contoh sepanjang bagian ini: client membaca baris teks dari keyboard, mengirim ke server; server mengubahnya menjadi huruf kapital dan mengembalikannya; client menampilkannya.</p>
+
+    <div class="grid2">
+      <div class="box"><h4>UDP: tanpa koneksi</h4>
+        <ul>
+          <li>Tanpa "connection"; <strong>tidak ada handshaking</strong> sebelum mengirim.</li>
+          <li>Sender secara eksplisit menempelkan <strong>IP tujuan + nomor port</strong> ke tiap paket.</li>
+          <li>Receiver mengekstrak IP asal + port dari paket yang diterima.</li>
+          <li>Data bisa <strong>hilang</strong> atau <strong>tidak berurutan</strong>.</li>
+          <li>Dari kacamata aplikasi: transfer <em>unreliable</em> dari kelompok bytes ("datagram").</li>
+        </ul>
+      </div>
+      <div class="box"><h4>TCP: berorientasi koneksi</h4>
+        <ul>
+          <li>Client <strong>harus menghubungi server dulu</strong>: server harus berjalan dan membuat <em>welcoming socket</em>.</li>
+          <li>Client membuat soket TCP dengan menentukan IP + port server; koneksi TCP dibangun.</li>
+          <li>Saat dikontak client, TCP server membuat <strong>soket (connectionSocket) baru</strong> untuk proses server tsb berkomunikasi dengan client itu → server bisa berbicara dengan <strong>banyak client</strong> sekaligus (dibedakan lewat source port &amp; IP client).</li>
+          <li>TCP menyediakan <strong>reliable, in-order byte-stream</strong> ("pipa") antar proses.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Client UDP (Python)</h3>
+    <pre><span class="c"># UDPClient.py</span>
+from socket import *
+serverName = 'hostname'
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_DGRAM)   <span class="c"># buat UDP socket</span>
+message = input('Input lowercase sentence:')
+clientSocket.sendto(message.encode(), (serverName, serverPort))
+                       <span class="c"># tempel nama+port server, kirim ke soket</span>
+modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+                       <span class="c"># baca data bytes dari soket</span>
+print(modifiedMessage.decode())
+clientSocket.close()</pre>
+
+    <h3>Server UDP (Python)</h3>
+    <pre><span class="c"># UDPServer.py</span>
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_DGRAM)   <span class="c"># buat UDP socket</span>
+serverSocket.bind(('', serverPort))          <span class="c"># ikat ke port 12000</span>
+print('The server is ready to receive')
+while True:
+    message, clientAddress = serverSocket.recvfrom(2048)
+                            <span class="c"># baca dr soket: pesan + alamat client (IP &amp; port)</span>
+    modifiedMessage = message.decode().upper()
+    serverSocket.sendto(modifiedMessage.encode(), clientAddress)
+                            <span class="c"># kirim balik kapital ke client tsb</span></pre>
+
+    <h3>Client TCP (Python)</h3>
+    <pre><span class="c"># TCPClient.py</span>
+from socket import *
+serverName = 'servername'
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_STREAM)  <span class="c"># buat TCP socket</span>
+clientSocket.connect((serverName, serverPort)) <span class="c"># sambung ke server</span>
+sentence = input('Input lowercase sentence:')
+clientSocket.send(sentence.encode())
+modifiedSentence = clientSocket.recv(1024)
+print('From Server:', modifiedSentence.decode())
+clientSocket.close()
+<span class="c"># Perhatikan: tidak ada lagi "attach server name, port" per paket.</span></pre>
+
+    <h3>Server TCP (Python)</h3>
+    <pre><span class="c"># TCPServer.py</span>
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_STREAM)  <span class="c"># welcoming socket</span>
+serverSocket.bind(('', serverPort))
+serverSocket.listen(1)                       <span class="c"># mulai mendengar</span>
+print('The server is ready to receive')
+while True:
+    connectionSocket, addr = serverSocket.accept()
+                            <span class="c"># tunggu; dibuat soket baru utk client ini</span>
+    sentence = connectionSocket.recv(1024).decode()
+    capitalizedSentence = sentence.upper()
+    connectionSocket.send(capitalizedSentence.encode())
+    connectionSocket.close()                 <span class="c"># tutup koneksi client ini saja</span>
+<span class="c"># tanpa alamat (tidak seperti UDP); welcoming socket tetap terbuka</span></pre>
+
+    <div class="fig">
+      <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Arial,sans-serif" font-size="12">
+        <rect x="560" y="20" width="140" height="34" rx="6" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="630" y="41" text-anchor="middle" fill="#1a2330">server (hostid)</text>
+        <rect x="30" y="20" width="140" height="34" rx="6" fill="#eaf1ff" stroke="#93b4f8"/>
+        <text x="100" y="41" text-anchor="middle" fill="#1a2330">client</text>
+        <g stroke="#7c3aed" stroke-width="2">
+          <line x1="170" y1="37" x2="560" y2="37"/>
+        </g>
+        <text x="365" y="32" text-anchor="middle" fill="#7c3aed" font-size="11">TCP connection setup (handshake)</text>
+        <g fill="#5b6b7c" font-size="11">
+          <text x="170" y="70">&#8226; clientSocket = socket()</text>
+          <text x="170" y="86">&#8226; connect(hostid, port x)</text>
+          <text x="170" y="102">&#8226; kirim request lewat clientSocket</text>
+          <text x="170" y="118">&#8226; baca reply dr clientSocket</text>
+          <text x="170" y="134">&#8226; close clientSocket</text>
+          <text x="380" y="70">&#8226; serverSocket = socket()</text>
+          <text x="380" y="86">&#8226; accept() &rarr; connectionSocket baru</text>
+          <text x="380" y="102">&#8226; baca request dr connectionSocket</text>
+          <text x="380" y="118">&#8226; tulis reply ke connectionSocket</text>
+          <text x="380" y="134">&#8226; close connectionSocket</text>
+        </g>
+      </svg>
+      <div class="cap">Gambar 12 — Interaksi soket TCP: setup koneksi dulu, lalu pertukaran request/reply, soket per-client dibuat oleh accept().</div>
+    </div>
+
+    <h3>Socket timeouts (kasus "anak gembala")</h3>
+    <p>Kadang program harus menunggu <strong>salah satu dari beberapa kejadian</strong>: balasan dari ujung soket lainnya, <em>atau</em> <strong>timeout</strong> (timer); atau menunggu balasan dari beberapa soket sekaligus (<code>select()</code>, multithreading). Timeout dipakai luas di jaringan. Di soket Python: <code>settimeout()</code> menyalakan timer; jika tak ada pesan sebelum batas, operasi <code>recv()</code> <em>dipotong</em> dan <em>melempar exception timeout</em> yang harus ditangani dengan blok <code>try/except</code>.</p>
+    <pre>
+<span class="c"># Toy example: server TCP "para penduduk desa"</span>
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket.bind(('', serverPort))
+serverSocket.listen(1)
+counter = 0
+while counter &lt; 3:
+    connectionSocket, addr = serverSocket.accept()
+    connectionSocket.settimeout(10)          <span class="c"># timeout 10 detik</span>
+    try:
+        wolf_location = connectionSocket.recv(1024).decode()
+        send_hunter(wolf_location)           <span class="c"># fungsi penduduk desa</span>
+        connectionSocket.send('hunter sent')
+    except timeout:                          <span class="c"># tangkap exception timeout</span>
+        counter += 1
+    connectionSocket.close()</pre>
+    <ul>
+      <li>Ceritanya: anak gembala suka menyambung ke server tanpa mengirim lokasi serigala. Penduduk desa berhenti mendengarkan setelah 3 kali <code>timeout</code> (10 detik) berturut-turut.</li>
+      <li><code>settimeout(None)</code> menghapus timeout; <code>settimeout(0)</code> membuat soket <em>non-blocking</em>.</li>
+    </ul>
+    <div class="analogi">
+      <strong class="title">Analogi: UDP vs TCP adalah telepon</strong>
+      <strong>UDP</strong> = <strong>pos kilat tanpa resi</strong>: tulis alamat di tiap surat, lempar, semoga sampai, boleh hilang. <strong>TCP</strong> = <strong>telepon</strong>: kamu harus "menyambung dulu" (bel), baru bicara; operator membuat "saluran" khusus untuk tiap pembicara; urutan kata selalu benar. <strong>Timeout + try/except</strong> = menunggu jawaban di <strong>interkom</strong>: kalau 10 detik tak ada jawaban, buzzer berbunyi (exception) dan Anda mengurus hal lain, alih-alih diam selamanya menatap pengeras suara.
+    </div>
+  </section>
+
+  <!-- ============ SECTION 7 ============ -->
+  <section>
+    <h2><span class="num">7</span> Rangkuman</h2>
+    <p class="lead">Yang dipelajari di bab ini — plus tema penting yang diulang sepanjang materi.</p>
+
+    <div class="grid2">
+      <div class="box"><h4>Arsitektur aplikasi</h4>
+        <ul><li><strong>Client–server</strong>: server always-on, IP permanen; client tidak langsung berkomunikasi satu sama lain.</li><li><strong>P2P</strong>: tanpa server sentral, self-scaling, kompleks di manajemen.</li></ul>
+      </div>
+      <div class="box"><h4>Kebutuhan service aplikasi</h4>
+        <ul><li>Reliability (keutuhan data).</li><li>Bandwidth / throughput.</li><li>Delay / timing.</li><li>Keamanan.</li></ul>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="box"><h4>Model layanan transport Internet</h4>
+        <ul><li><strong>TCP</strong>: connection-oriented, reliable.</li><li><strong>UDP</strong>: unreliable, datagrams.</li></ul>
+      </div>
+      <div class="box"><h4>Protokol spesifik</h4>
+        <ul><li>HTTP, SMTP/IMAP, DNS.</li><li>P2P: BitTorrent.</li><li>Video streaming &amp; CDN, DASH.</li><li>Socket programming TCP &amp; UDP.</li></ul>
+      </div>
+    </div>
+
+    <h3>Yang paling penting: belajar tentang protokol!</h3>
+    <div class="kv">
+      <span>client/server request-reply</span>
+      <span>centralized vs decentralized</span>
+      <span>stateless vs stateful</span>
+      <span>scalability</span>
+      <span>reliable vs unreliable transfer</span>
+      <span>"complexity at network edge"</span>
+    </div>
+    <div class="callout green"><strong>Tema kunci Week 2:</strong> pertukaran pesan request/reply yang khas, keputusan terpusat vs terdesentralisasi, protokol tanpa-keadaan vs berkeadaan, skala, transfer andal vs tak andal, dan — yang paling penting — <strong>"complexity at the edge"</strong>: sebagian besar kecerdasan network (DNS, HTTP, streaming) hidup di end system, bukan di network core.</div>
+  </section>
+
+  <!-- ============ LATIHAN SOAL ============ -->
+  <section class="pagebreak">
+    <h2><span class="num">8</span> Latihan Soal</h2>
+    <p class="lead">Soal-soal ini dirangkum dari <strong>Homework 2</strong> (diekstrak dari tangkapan layar) dan dikembangkan dari materi PPT. Tipe soal pada homework: pilihan ganda (5–10 poin) dan isian numerik (10 poin). Kerjakan dulu, baru cocokkan dengan kunci di bagian 9.</p>
+
+    <div class="q"><div class="qn">Soal 1 · Pilihan ganda (5 pts)</div>
+      Sebuah halaman web terdiri atas <strong>satu file HTML dasar</strong> yang mereferensikan <strong>8 objek kecil</strong>, semuanya di server yang sama. Alamat IP sudah diketahui, <strong>RTT = 50 ms</strong>, dan waktu transmisi dapat diabaikan. Berapa waktu total yang berlalu dengan <strong>non-persistent HTTP tanpa koneksi paralel</strong>?
+      <div class="opts">
+        <div>A. 450 ms</div><div>B. 500 ms</div><div>C. 800 ms</div><div>D. <strong>900 ms</strong></div><div>E. 1000 ms</div>
+      </div>
+      <div class="ans">Kunci: D. 900 ms</div>
+      <div class="expl">9 objek (1 HTML + 8 gambar) × 2 RTT per objek = 18 RTT = 18 × 50 ms = 900 ms.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 2 · Pilihan ganda (5 pts)</div>
+      Kondisi seperti Soal 1, tetapi browser dikonfigurasi dengan <strong>6 koneksi TCP paralel</strong> dan tetap memakai non-persistent HTTP. Berapa waktu yang berlalu?
+      <div class="opts">
+        <div>A. 250 ms</div><div>B. 150 ms</div><div>C. 400 ms</div><div>D. 200 ms</div><div>E. <strong>300 ms</strong></div>
+      </div>
+      <div class="ans">Kunci: E. 300 ms</div>
+      <div class="expl">HTML dasar harus dimuat dulu: 2 RTT = 100 ms. Lalu 8 objek dengan 6 koneksi paralel → 2 gelombang (6 lalu 2), tiap gelombang 2 RTT = 100 ms. Total 100 + 100 + 100 = 300 ms.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 3 · Pilihan ganda (5 pts)</div>
+      Kondisi yang sama (RTT = 50 ms, transmisi diabaikan), tetapi kini <strong>persistent HTTP</strong> dipakai dan client <strong>memipakan (pipeline)</strong> permintaan untuk seluruh 8 objek. Berapa waktu total?
+      <div class="opts">
+        <div>A. 100 ms</div><div>B. <strong>150 ms</strong></div><div>C. 200 ms</div><div>D. 250 ms</div><div>E. 500 ms</div>
+      </div>
+      <div class="ans">Kunci: B. 150 ms</div>
+      <div class="expl">Koneksi TCP (1 RTT) + HTML dasar (1 RTT) + semua objek terpipakan dalam satu RTT = 3 RTT = 150 ms.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 4 · Pilihan ganda (5 pts)</div>
+      Jaringan institusi mencapai Internet lewat <strong>access link 15 Mbps</strong>. Tanpa cache, rata-rata laju data yang dikirim ke browser adalah <strong>9 Mbps</strong>. Sebuah <strong>web cache lokal dengan hit rate 0.4</strong> dipasang. Berapa <strong>utilisasi access link</strong> yang dihasilkan?
+      <div class="opts">
+        <div>A. <strong>0.36</strong></div><div>B. 0.90</div><div>C. 0.24</div><div>D. 0.60</div><div>E. 0.40</div>
+      </div>
+      <div class="ans">Kunci: A. 0.36</div>
+      <div class="expl">Hanya 60% request yang lewat access link: 0.6 × 9 Mbps = 5.4 Mbps → 5.4/15 = 0.36.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 5 · Pilihan ganda (5 pts)</div>
+      Melanjutkan skenario di atas: request yang dipenuhi <strong>origin server memakan 2.1 s</strong>, sedangkan request yang dipenuhi <strong>cache lokal 10 ms</strong>. Hit rate 0.4. Berapa <strong>rata-rata end-to-end delay</strong>?
+      <div class="opts">
+        <div>A. 0.84 s</div><div>B. 1.06 s</div><div>C. <strong>1.26 s</strong></div><div>D. 2.10 s</div><div>E. 0.85 s</div>
+      </div>
+      <div class="ans">Kunci: C. 1.26 s</div>
+      <div class="expl">0.6 × 2.1 s + 0.4 × 0.01 s = 1.26 + 0.004 ≈ 1.26 s.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 6 · Pilihan ganda (5 pts)</div>
+      Sebuah halaman web dikirim lewat <strong>HTTP/2</strong>: satu <strong>video klip = 2000 frame</strong> dan <strong>5 gambar = 3 frame</strong> masing-masing. Jika <strong>semua frame video dikirim lebih dulu tanpa interleaving</strong>, berapa <em>frame time</em> yang dibutuhkan sampai <strong>kelima gambar terkirim semua</strong>?
+      <div class="opts">
+        <div>A. 15</div><div>B. 2000</div><div>C. 2003</div><div>D. <strong>2015</strong></div><div>E. 2018</div>
+      </div>
+      <div class="ans">Kunci: D. 2015</div>
+      <div class="expl">Gambar mulai terkirim setelah video selesai (2000 frame), lalu 5 gambar × 3 frame = 15 → 2000 + 15 = 2015.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 7 · Pilihan ganda (5 pts)</div>
+      Halaman yang sama di Soal 6, tetapi kini server <strong>menginterleav frame</strong>, mengirim satu frame dari tiap objek secara bergiliran. Berapa frame time sampai <strong>semua gambar terkirim</strong>?
+      <div class="opts">
+        <div>A. 15</div><div>B. <strong>18</strong></div><div>C. 20</div><div>D. 30</div><div>E. 2015</div>
+      </div>
+      <div class="ans">Kunci: B. 18</div>
+      <div class="expl">Tiap gambar butuh 3 frame; ada 6 objek (1 video + 5 gambar). Setelah 3 putaran penuh (6 frame × 3 = 18), kelima gambar (5×3 = 15 frame) sudah terkirim.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 8 · Pilihan ganda (5 pts)</div>
+      Halaman yang sama, kini dengan <strong>prioritasi</strong>: semua gambar memiliki prioritas di atas video; gambar 1 di atas gambar 2, gambar 2 di atas gambar 3, dan seterusnya. Berapa frame time sampai <strong>gambar kedua selesai terkirim</strong>?
+      <div class="opts">
+        <div>A. 6</div><div>B. <strong>6</strong></div><div>C. 18</div><div>D. 20</div><div>E. 30</div>
+      </div>
+      <div class="ans">Kunci: B. 6</div>
+      <div class="expl">Karena prioritas, frame dikirim sesuai urutan objek: gambar 1 (3 frame) lalu gambar 2 (3 frame). Total 6 frame time. (Tampilan duplikat opsi pada screenshot homework: A/B sama-sama "6".)</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 9 · Pilihan ganda (5 pts)</div>
+      Sebuah host mengirim query untuk sebuah hostname ke <strong>local DNS server</strong>, yang menyelesaikan nama dengan <strong>iterated queries</strong>. Local DNS server memiliki <strong>alamat TLD server yang relevan di cache-nya</strong>, tetapi tidak yang lain. Menghitung <strong>setiap pesan DNS yang dikirim di kedua arah</strong>, termasuk pesan antara host dan local DNS, berapa jumlah pesannya?
+      <div class="opts">
+        <div>A. 5</div><div>B. <strong>6</strong></div><div>C. 8</div><div>D. 10</div><div>E. 12</div>
+      </div>
+      <div class="ans">Kunci: B. 6</div>
+      <div class="expl">host→local (1) dan local→host (1); local→TLD (1) dan balasannya (1); local→authoritative (1) dan balasannya (1) = 6 pesan.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 10 · Isian numerik (10 pts)</div>
+      Browser mengambil halaman berupa <strong>file HTML dasar + 10 objek kecil</strong>, semua dari server sama. IP sudah di-cache, <strong>RTT = 80 ms</strong>, semua waktu transmisi diabaikan. <strong>Non-persistent HTTP tanpa koneksi paralel</strong> membutuhkan <strong>____</strong> ms total, sedangkan <strong>persistent HTTP dengan pipelining</strong> semua 10 objek membutuhkan <strong>____</strong> ms total. (Tulis angka saja, tanpa satuan.)
+      <div class="ans">Kunci: 1760 dan 240</div>
+      <div class="expl">Non-persistent: 11 objek × 2 × 80 = 1760 ms. Persistent pipelined: 3 RTT (koneksi + HTML + 10 objek) = 240 ms.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 11 · Isian numerik (10 pts)</div>
+      LAN institusi menjangkau Internet lewat <strong>access link 100 Mbps</strong>. Browser rata-rata mengeluarkan <strong>60 request/detik</strong> dan setiap objek web panjangnya <strong>1 Mbit</strong>, sehingga laju data rata-rata ke browser = <strong>____</strong> Mbps. Tanpa cache, utililisasi access link = <strong>____</strong>. Setelah dipasang <strong>web cache lokal dengan hit rate 0.5</strong>, utilisasi menjadi <strong>____</strong>. (Tulis kedua utilisasi sebagai desimal 0–1.)
+      <div class="ans">Kunci: 60 ; 0.6 ; 0.3</div>
+      <div class="expl">60 req/s × 1 Mbit = 60 Mbps. Tanpa cache: 60/100 = 0.6. Dengan hit rate 0.5: 0.5 × 60 = 30 Mbps → 30/100 = 0.3.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 12 · Isian (10 pts)</div>
+      Host di <code>eng.nyu.edu</code> meminta IP untuk <code>gaia.cs.umass.edu</code> ke local DNS server yang <strong>cache-nya kosong total</strong> dan memakai <strong>iterated queries</strong>. Local DNS server harus mengirim <strong>____</strong> pesan query ke dalam hierarki DNS. RTT host–local = 10 ms dan RTT local–server DNS lain = 40 ms, sehingga host menunggu <strong>____</strong> ms sebelum menerima jawaban. Resource record yang akhirnya membawa alamat IP berjenis <strong>____</strong>.
+      <div class="ans">Kunci: 3 ; 130 ; A</div>
+      <div class="expl">3 query (root, TLD, authoritative). Waktu: arah host→local 5 ms + 3×40 ms + 5 ms (local→host) = 130 ms. RR pembawa alamat IP = tipe A.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 13 · Isian numerik (10 pts)</div>
+      Halaman web dikirim via <strong>HTTP/2</strong>: satu <strong>video klip (1200 frame)</strong> + <strong>4 gambar (5 frame</strong> masing-masing). Jika server mengirim <strong>semua frame video dulu tanpa interleaving</strong>, semua gambar terkirim setelah <strong>____</strong> frame time. Jika server <strong>menginterleav</strong> satu frame dari tiap dari 5 objek bergiliran, semua gambar terkirim setelah <strong>____</strong> frame time. Dengan <strong>prioritasi</strong>: semua gambar di atas video; gambar 1 di atas gambar 2, dst. — gambar ketiga selesai setelah <strong>____</strong> frame time.
+      <div class="ans">Kunci: 1220 ; 25 ; 15</div>
+      <div class="expl">(a) 1200 + 4×5 = 1220. (b) 5 objek per putaran; gambar butuh 5 frame → 5 putaran × 5 = 25. (c) gambar1(5)+gambar2(5)+gambar3(5) = 15.</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 14 · Isian protokol (10 pts)</div>
+      Alice menggunakan <strong>Gmail via browser</strong> dan Bob membaca suratnya dengan <strong>mail client yang menyimpan pesan di mail server perusahaannya</strong>. Saat Alice mengirim pesan ke Bob: browser-nya mendorong ke server Gmail memakai protokol <strong>____</strong>; server Gmail menyerahkannya ke mail server Bob memakai protokol <strong>____</strong>; dan mail client Bob mengambilnya dari mail server memakai protokol <strong>____</strong>. (Tulis akronim protokol, huruf kapital, tanpa versi.)
+      <div class="ans">Kunci: HTTP ; SMTP ; IMAP</div>
+      <div class="expl">Webmail: HTTP/HTTPS dari browser ke Gmail; antar mail server: SMTP; mail client mengambil: IMAP (bukan POP, karena disebut "menyimpan pesan di server").</div>
+    </div>
+
+    <div class="q"><div class="qn">Soal 15 · Pilihan ganda (5 pts)</div>
+      Host mengklik link yang URL-nya <strong>belum ter-cache</strong>, sehingga dibutuhkan DNS lookup. <strong>Tiga server DNS</strong> dikunjungi sebelum IP kembali, masing-masing dengan <strong>RTT 20 ms</strong>. Halaman hanya file HTML kecil (waktu transmisi = 0) dan <strong>RTT host–web server = 30 ms</strong>. Memakai non-persistent HTTP, berapa waktu dari klik sampai objek diterima?
+      <div class="opts">
+        <div>A. <strong>120 ms</strong></div><div>B. 180 ms</div><div>C. 60 ms</div><div>D. 150 ms</div><div>E. 90 ms</div>
+      </div>
+      <div class="ans">Kunci: A. 120 ms</div>
+      <div class="expl">DNS: 3 × 20 = 60 ms; TCP (1 RTT = 30 ms) + request/response (1 RTT = 30 ms). Total 60 + 30 + 30 = 120 ms.</div>
+    </div>
+  </section>
+
+  <!-- ============ KUNCI JAWABAN ============ -->
+  <section>
+    <h2><span class="num">9</span> Kunci Jawaban Sekilas</h2>
+    <table>
+      <tr><th>Soal</th><th>Jawaban</th><th>Konsep</th></tr>
+      <tr><td>1</td><td>D. 900 ms</td><td>Non-persistent: objek × 2 RTT</td></tr>
+      <tr><td>2</td><td>E. 300 ms</td><td>Paralel: HTML dulu, lalu 2 gelombang objek</td></tr>
+      <tr><td>3</td><td>B. 150 ms</td><td>Persistent + pipelining: 3 RTT total</td></tr>
+      <tr><td>4</td><td>A. 0.36</td><td>Utilisasi = (1−hit) × laju / kapasitas</td></tr>
+      <tr><td>5</td><td>C. 1.26 s</td><td>Rata-rata tertimbang hit rate</td></tr>
+      <tr><td>6</td><td>D. 2015</td><td>HTTP/2 non-interleave: video dulu</td></tr>
+      <tr><td>7</td><td>B. 18</td><td>HTTP/2 interleave: putaran</td></tr>
+      <tr><td>8</td><td>B. 6</td><td>HTTP/2 prioritas</td></tr>
+      <tr><td>9</td><td>B. 6 pesan</td><td>Iterated query + cache TLD</td></tr>
+      <tr><td>10</td><td>1760 dan 240</td><td>Non-persistent vs persistent, RTT 80 ms</td></tr>
+      <tr><td>11</td><td>60 ; 0.6 ; 0.3</td><td>Utilisasi access link &amp; cache</td></tr>
+      <tr><td>12</td><td>3 ; 130 ; A</td><td>Iterated, RTT serial, resource record A</td></tr>
+      <tr><td>13</td><td>1220 ; 25 ; 15</td><td>HTTP/2: interleave &amp; prioritas</td></tr>
+      <tr><td>14</td><td>HTTP ; SMTP ; IMAP</td><td>Webmail, transfer, akses</td></tr>
+      <tr><td>15</td><td>A. 120 ms</td><td>DNS + 2 RTT HTTP</td></tr>
+    </table>
+    <div class="callout green">Semua jawaban di atas diverifikasi dengan membandingkan hasil perhitungan terhadap kunci "Correct Answer" yang tampak pada tangkapan layar Homework 2.</div>
+  </section>
+
+  <footer>Rangkuman Week 2 — Application Layer · Data Communication and Computer Network Security · Sumber: Computer Networking: A Top-Down Approach (Kurose &amp; Ross, 9th ed., 2025) · Soal latihan diadaptasi dari Homework 2.</footer>
